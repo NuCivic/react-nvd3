@@ -1,5 +1,10 @@
 React component for NVD3 re-usable charting library
 
+### Requirements
+* NVD3
+* D3
+* ReactJS
+
 ### Quick start
 
 ```javascript
@@ -117,6 +122,9 @@ The key in the collection that should be used as x value or a function that retu
 
 #### y (string|function)
 The key in the collection that should be used as y value or a function that returns it.
+
+#### margin-* (string)
+To set chart margins you could use margin-top, margin-left, margin-right and margin-bottom.
 
 #### Available chart configurations
 All the nvd3 configurations for each chart are available. For example if you are using the discreteBarChart then you could show values in this way:
