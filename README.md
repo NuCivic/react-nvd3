@@ -17,6 +17,7 @@ React component for NVD3 re-usable charting library
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react-with-addons.min.js"></script>
+  <!-- You should remove this for production and provide a compiled version of react components -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
   <script type="text/jsx" src="/dist/react-nvd3.js"></script>
 
