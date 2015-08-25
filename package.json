@@ -1,0 +1,42 @@
+{
+  "name": "react-nvd3",
+  "description": "React nvd3 reusable graph components.",
+  "version": "0.0.1",
+  "keywords": [
+    "Recat",
+    "D3",
+    "NVD3",
+    "graph",
+    "reusable"
+  ],
+  "homepage": "https://github.com/NuCivic/react-nvd3",
+  "author": {
+    "name": "Mariano Carballal",
+    "email": "marianocarballal@gmail.com",
+    "url": "https://github.com/topicus"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:NuCivic/react-nvd3.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NuCivic/react-nvd3/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "dependencies": {
+    "d3": "*",
+    "nvd3": "*",
+    "react": "0.13.1"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "main": "./dist/react-nvd3.min.js",
+  "scripts": {
+  }
+}
