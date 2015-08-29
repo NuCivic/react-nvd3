@@ -1,0 +1,42 @@
+;(function(global){
+  var datum = [
+    {
+      "label": "One",
+      "value" : 29.765957771107
+    } ,
+    {
+      "label": "Two",
+      "value" : 0
+    } ,
+    {
+      "label": "Three",
+      "value" : 32.807804682612
+    } ,
+    {
+      "label": "Four",
+      "value" : 196.45946739256
+    } ,
+    {
+      "label": "Five",
+      "value" : 0.19434030906893
+    } ,
+    {
+      "label": "Six",
+      "value" : 98.079782601442
+    } ,
+    {
+      "label": "Seven",
+      "value" : 13.925743130903
+    } ,
+    {
+      "label": "Eight",
+      "value" : 5.1387322875705
+    }
+  ];
+
+  React.render(
+    React.createElement(NVD3Chart, {id:'pieChart', type:'pieChart', datum:datum, x:'label', y:'value', labelThreshold:'.05'}),
+    document.getElementById('pieChart')
+  );
+
+})(window);

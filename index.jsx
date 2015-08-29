@@ -34,7 +34,6 @@ var Chart = React.createClass({
   renderChart: function(){
     var self = this;
     nv.addGraph(function() {
-
       var chart = nv.models[self.props.type]()
         .x(self.getValueFunction(self.props.x, 'x'))
         .y(self.getValueFunction(self.props.y, 'y'))
