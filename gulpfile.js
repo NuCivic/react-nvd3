@@ -1,13 +1,13 @@
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
-var react = require('gulp-react');
+var webpack = require('gulp-webpack');
 var concat = require('gulp-concat');
 var browserSync = require('browser-sync');
 
 gulp.task('js', function () {
-  gulp.src('*.jsx')
-  .pipe(react())
+  gulp.src('index.js')
+  .pipe(webpack(require('./webpack.config.js')))
   .pipe(concat('react-nvd3.js'))
   .pipe(gulp.dest('dist'))
   .pipe(uglify())
@@ -24,7 +24,7 @@ gulp.task('serve', ['js'], function () {
             baseDir: "./"
         }
     });
-    gulp.watch("*.jsx", ['js-watch']);
+    gulp.watch("index.js", ['js-watch']);
 });
 
 // gulp.task('examples', function () {
