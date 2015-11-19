@@ -107,7 +107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        !_this.props.configure || _this.props.configure(_this.chart); // hook for configuring the chart
 
-	        _d32['default'].select(_this.refs.svg.getDOMNode()).datum(_this.props.datum).call(_this.chart);
+	        _d32['default'].select(_this.refs.svg).datum(_this.props.datum).call(_this.chart);
 
 	        _nvd32['default'].utils.windowResize(_this.chart.update);
 	        return _this.chart;
@@ -116,7 +116,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
-	      !this.chart || _d32['default'].select(this.refs.svg.getDOMNode()).datum(this.props.datum).call(this.chart);
+	      !this.chart || _d32['default'].select(this.refs.svg).datum(this.props.datum).call(this.chart);
 	    }
 	  }, {
 	    key: 'getChartOptions',
