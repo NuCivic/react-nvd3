@@ -17,7 +17,7 @@
   "dependencies": {
     "d3": "~3.4.4",
     "nvd3": "~1.8.1",
-    "react": "~0.13.3"
+    "react": "~0.14.3"
   },
   "devDependencies": {
     "browser-sync": "^2.8.2",
