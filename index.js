@@ -20,7 +20,7 @@ class Chart extends React.Component {
 
       !this.props.configure || this.props.configure(this.chart); // hook for configuring the chart
 
-      d3.select(this.refs.svg.getDOMNode()).datum(this.props.datum).call(this.chart);
+      d3.select(this.refs.svg).datum(this.props.datum).call(this.chart);
 
       nv.utils.windowResize(this.chart.update);
       return this.chart;
@@ -28,7 +28,7 @@ class Chart extends React.Component {
   }
 
   componentDidUpdate() {
-    !this.chart || d3.select(this.refs.svg.getDOMNode()).datum(this.props.datum).call(this.chart);
+    !this.chart || d3.select(this.refs.svg).datum(this.props.datum).call(this.chart);
   }
 
   getChartOptions() {
