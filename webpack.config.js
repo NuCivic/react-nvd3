@@ -6,7 +6,17 @@ module.exports = {
     filename: 'react-nvd3.js'
   },
   module: {
-    loaders: [{test: /\.js?$/, exclude: /(node_modules|bower_components)/, loader: 'babel?optional[]=runtime&stage=0'}]
+    loaders: [
+      {
+        test: /\.js?$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel',
+        query: {
+          presets: ['es2015', 'react', 'stage-0'],
+          plugins: ['transform-runtime']
+        }
+      }
+    ]
   },
   externals: [
   {react: {root: 'React', amd: 'react', commonjs: 'react', commonjs2: 'react'}},

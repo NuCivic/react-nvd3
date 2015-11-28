@@ -1,6 +1,6 @@
 {
   "name": "react-nvd3",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/NuCivic/react-nvd3",
   "authors": [
     "Mariano Carballal <marianocarballal@gmail.com>"
@@ -12,7 +12,8 @@
     "D3",
     "NVD3",
     "graph",
-    "reusable"
+    "reusable",
+    "chart"
   ],
   "dependencies": {
     "d3": "~3.4.4",

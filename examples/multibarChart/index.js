@@ -39,8 +39,13 @@
   ];
 
   ReactDOM.render(
-    <NVD3Chart type="discreteBarChart" datum={datum} x="label" y="value" />,
-    document.getElementById('barChart')
+    React.createElement(NVD3Chart, {
+      type:'multiBarChart',
+      datum: datum,
+      x: 'label',
+      y: 'value'
+    }),
+    document.getElementById('multiBarChart')
   );
 
 })(window);

@@ -34,8 +34,14 @@
     }
   ];
 
-  React.render(
-    React.createElement(NVD3Chart, {type:'pieChart', datum:datum, x:'label', y:'value', labelThreshold:'.05'}),
+  ReactDOM.render(
+    React.createElement(NVD3Chart, {
+      type:'pieChart',
+      datum: datum,
+      x: 'label',
+      y: 'value',
+      donut: true
+    }),
     document.getElementById('pieChart')
   );
 

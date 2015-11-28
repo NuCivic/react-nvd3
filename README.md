@@ -1,11 +1,11 @@
 React component for NVD3 re-usable charting library
 
-### Requirements
+## Requirements
 * NVD3
 * D3
 * ReactJS
 
-### Quick start
+## Quick start
 
 ```javascript
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ React component for NVD3 re-usable charting library
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-with-addons.min.js"></script>
   <!-- You should remove this for production and provide a compiled version of react components -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/JSXTransformer.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
   <script type="text/jsx" src="/dist/react-nvd3.js"></script>
 
   <!-- STYLESHEETS -->
@@ -32,7 +32,7 @@ React component for NVD3 re-usable charting library
 </head>
 <body>
   <div id="barChart"></div>
-  <script type="text/jsx">
+  <script type="text/babel">
     ;(function(global){
       var datum = [{
           key: "Cumulative Return",
@@ -83,7 +83,12 @@ React component for NVD3 re-usable charting library
 </html>
 ```
 
-### How to use
+## How do I add this to my project?
+* Using bower and running `bower install react-nvd3`
+* Using npm and running `npm install react-nvd3`
+* Downloading it manually by clicking [here to download minified version](https://raw.githubusercontent.com/NuCivic/react-nvd3/master/dist/react-nvd3.min.js)
+
+## How to use
 
 ```javascript
 <NVD3Chart id="barChart" type="discreteBarChart" datum={datum} x="label" y="value"/>
@@ -124,8 +129,15 @@ The key in the collection that should be used as x value or a function that retu
 #### y (string|function)
 The key in the collection that should be used as y value or a function that returns it.
 
-#### margin-* (string)
-To set chart margins you could use margin-top, margin-left, margin-right and margin-bottom.
+#### margin (object)
+To set chart margins you should provide an object with the wanted margins. For example 
+
+```javascript 
+  React.render(
+    <NVD3Chart id="barChart" type="discreteBarChart" datum={datum} margin={{left:200}}/>,
+    document.getElementById('barChart')
+  );  
+```
 
 #### Available chart configurations
 All the nvd3 configurations for each chart are available. For example if you are using the discreteBarChart then you could show values in this way:
@@ -139,7 +151,7 @@ All the nvd3 configurations for each chart are available. For example if you are
 
 For more information about the available options you could check the nvd3 documentation http://nvd3.org/
 
-NOTICE: An extensive documentation with examples is embeded in the repository https://github.com/novus/nvd3/blob/master/examples/documentation.html . If you want to check it just clone it and open that file.
+**NOTICE:** An extensive documentation with examples is embeded in the repository https://github.com/novus/nvd3/blob/master/examples/documentation.html . If you want to check it just clone it and open that file.
 
 ### Do you want to load a chart from your database?
 Since react allow you to use a plain javascript syntax to pass props then you could do this:
@@ -170,3 +182,21 @@ $.getJSON('/mychartendpoint/1',function(chart){
     );
 });
 ```
+
+**NOTICE:** Currently axis formats can't be serialized because they are functions. In further versions a way to store those parameters will be provided.
+
+## Developers
+Source code is pretty straightforward. You can take a look at https://github.com/NuCivic/react-nvd3/blob/master/index.js.
+
+#### Requirements
+* nodejs
+* webpack
+* gulp
+
+#### Quick start
+* git clone https://github.com/NuCivic/react-nvd3.git
+* cd react-nvd3
+* npm install
+* gulp serve
+* open any example http://localhost:3000/examples/barChart/
+

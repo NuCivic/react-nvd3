@@ -27,15 +27,4 @@ gulp.task('serve', ['js'], function () {
     gulp.watch("index.js", ['js-watch']);
 });
 
-// gulp.task('examples', function () {
-//   browserify({
-//     entries: 'examples/index.jsx',
-//     extensions: ['.jsx']
-//   })
-//   .transform(babelify)
-//   .bundle()
-//   .pipe(source('examples/index.js'))
-//   .pipe(gulp.dest('./'));
-// });
-
 gulp.task('default', ['js']);
