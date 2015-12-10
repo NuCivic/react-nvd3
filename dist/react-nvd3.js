@@ -123,29 +123,51 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  (0, _createClass3.default)(NVD3Chart, [{
 	    key: 'componentDidMount',
+
+	    /**
+	     * Instantiate a new chart setting
+	     * a callback if exists
+	     */
 	    value: function componentDidMount() {
-	      var _this2 = this;
+	      _nvd2.default.addGraph(this.renderChart.bind(this), this.props.renderEnd);
+	    }
 
-	      _nvd2.default.addGraph(function () {
+	    /**
+	     * Update the chart after state is changed.
+	     */
 
-	        // Margins are an special case. It needs to be
-	        // passed to the margin function.
-	        _this2.chart = _nvd2.default.models[_this2.props.type]().x(_this2.getValueFunction(_this2.props.x, 'x')).y(_this2.getValueFunction(_this2.props.y, 'y')).margin(_this2.options(MARGIN, _utils.pick).margin || _this2.propsByPrefix('margin') || {}).options(_this2.options(SETTINGS.concat(AXIS_NAMES, SIZE, MARGIN), _utils.without));
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      this.renderChart();
+	    }
 
-	        // We need to set the axis options separatly
-	        _this2.setAxisOptions(_this2.chart, _this2.options(AXIS_NAMES));
+	    /**
+	     * Creates a chart model and render it
+	     */
 
-	        // hook for configuring the chart
-	        !_this2.props.configure || _this2.props.configure(_this2.chart);
+	  }, {
+	    key: 'renderChart',
+	    value: function renderChart() {
+	      // Margins are an special case. It needs to be
+	      // passed to the margin function.
+	      this.chart = this.chart || _nvd2.default.models[this.props.type]();
 
-	        // Render chart using d3
-	        _d2.default.select(_this2.refs.svg).datum(_this2.props.datum).call(_this2.chart);
+	      this.chart.x(this.getValueFunction(this.props.x, 'x')).y(this.getValueFunction(this.props.y, 'y')).margin(this.options(MARGIN, _utils.pick).margin || this.propsByPrefix('margin') || {}).options(this.options(SETTINGS.concat(AXIS_NAMES, SIZE, MARGIN), _utils.without));
 
-	        // Update the chart if the window size change.
-	        // TODO: review posible leak.
-	        _nvd2.default.utils.windowResize(_this2.chart.update);
-	        return _this2.chart;
-	      });
+	      // We need to set the axis options separatly
+	      this.setAxisOptions(this.chart, this.options(AXIS_NAMES));
+
+	      // hook for configuring the chart
+	      !this.props.configure || this.props.configure(this.chart);
+
+	      // Render chart using d3
+	      _d2.default.select(this.refs.svg).datum(this.props.datum).call(this.chart);
+
+	      // Update the chart if the window size change.
+	      // TODO: review posible leak.
+	      _nvd2.default.utils.windowResize(this.chart.update);
+	      return this.chart;
 	    }
 
 	    /**
@@ -167,16 +189,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        }
 	      }
-	    }
-
-	    /**
-	     * Update the chart after state is changed.
-	     */
-
-	  }, {
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate() {
-	      !this.chart || _d2.default.select(this.refs.svg).datum(this.props.datum).call(this.chart);
 	    }
 
 	    /**
@@ -222,12 +234,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'propsByPrefix',
 	    value: function propsByPrefix(prefix) {
-	      var _this3 = this;
+	      var _this2 = this;
 
 	      console.warn('Set margin with prefixes is deprecated use an object instead');
 	      prefix = prefix + '-';
 	      return (0, _keys2.default)(this.props).reduce(function (memo, prop) {
-	        if (prop.startsWith(prefix)) memo[prop.replace(prefix, '')] = _this3.props[prop];
+	        if (prop.startsWith(prefix)) memo[prop.replace(prefix, '')] = _this2.props[prop];
 	        return memo;
 	      }, {});
 	    }

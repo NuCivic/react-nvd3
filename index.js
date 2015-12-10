@@ -14,12 +14,30 @@ export default class NVD3Chart extends React.Component {
     configure: React.PropTypes.func
   }
 
+  /**
+   * Instantiate a new chart setting
+   * a callback if exists
+   */
   componentDidMount() {
-    nv.addGraph(() => {
+    nv.addGraph(this.renderChart.bind(this), this.props.renderEnd);
+  }
 
+  /**
+   * Update the chart after state is changed.
+   */
+  componentDidUpdate() {
+    this.renderChart();
+  }
+
+  /**
+   * Creates a chart model and render it
+   */
+  renderChart() {
       // Margins are an special case. It needs to be
       // passed to the margin function.
-      this.chart = nv.models[this.props.type]()
+      this.chart = this.chart || nv.models[this.props.type]();
+
+      this.chart
         .x(this.getValueFunction(this.props.x, 'x'))
         .y(this.getValueFunction(this.props.y, 'y'))
         .margin(this.options(MARGIN, pick).margin || this.propsByPrefix('margin') || {})
@@ -32,13 +50,14 @@ export default class NVD3Chart extends React.Component {
       !this.props.configure || this.props.configure(this.chart);
 
       // Render chart using d3
-      d3.select(this.refs.svg).datum(this.props.datum).call(this.chart);
+      d3.select(this.refs.svg)
+        .datum(this.props.datum)
+        .call(this.chart);
 
       // Update the chart if the window size change.
       // TODO: review posible leak.
       nv.utils.windowResize(this.chart.update);
       return this.chart;
-    });
   }
 
   /**
@@ -57,13 +76,6 @@ export default class NVD3Chart extends React.Component {
         }
       }
     }
-  }
-
-  /**
-   * Update the chart after state is changed.
-   */
-  componentDidUpdate() {
-    !this.chart || d3.select(this.refs.svg).datum(this.props.datum).call(this.chart);
   }
 
   /**
