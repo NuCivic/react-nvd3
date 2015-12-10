@@ -139,6 +139,16 @@ To set chart margins you should provide an object with the wanted margins. For e
   );  
 ```
 
+#### renderEnd (function)
+A function to be called after the chart render ends.
+
+```javascript 
+  React.render(
+    <NVD3Chart type="discreteBarChart" datum={datum} renderEnd={mycallback}/>,
+    document.getElementById('barChart')
+  );  
+```
+
 #### Available chart configurations
 All the nvd3 configurations for each chart are available. For example if you are using the discreteBarChart then you could show values in this way:
 
