@@ -11,7 +11,12 @@ let MARGIN = 'margin';
 export default class NVD3Chart extends React.Component {
   static propTypes: {
     type: React.PropTypes.string.isRequired,
-    configure: React.PropTypes.func
+    configure: React.PropTypes.func,
+    updateOnResize: React.PropTypes.bool
+  }
+
+  static defaultProps: {
+    updateOnResize: false
   }
 
   /**
@@ -56,7 +61,7 @@ export default class NVD3Chart extends React.Component {
 
       // Update the chart if the window size change.
       // TODO: review posible leak.
-      nv.utils.windowResize(this.chart.update);
+      if (this.props.updateOnResize) nv.utils.windowResize(this.chart.update);
       return this.chart;
   }
 
