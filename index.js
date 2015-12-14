@@ -30,6 +30,13 @@ export default class NVD3Chart extends React.Component {
   }
 
   /**
+   * Remove listeners
+   */
+  componentWillUnmount() {
+    this.resizeHandler.clear();
+  }
+
+  /**
    * Creates a chart model and render it
    */
   renderChart() {
@@ -55,8 +62,9 @@ export default class NVD3Chart extends React.Component {
         .call(this.chart);
 
       // Update the chart if the window size change.
-      // TODO: review posible leak.
-      nv.utils.windowResize(this.chart.update);
+      // Save resizeHandle to remove the resize listener later.
+      this.resizeHandler = nv.utils.windowResize(this.chart.update);
+
       return this.chart;
   }
 

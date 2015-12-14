@@ -38,8 +38,32 @@
     }
   ];
 
+  // Unmounting example
+  var Chart = React.createClass({
+    getInitialState: function(){
+      return {visible: true};
+    },
+    changeVisibility: function(){
+      this.setState({visible: false});
+    },
+    render: function(){
+      var chart;
+
+      if(this.state.visible) {
+        chart = <NVD3Chart type="discreteBarChart" datum={datum} x="label" y="value" />;
+      }
+
+      return (
+        <div>
+          <button onClick={this.changeVisibility}>Click me</button>
+          {chart}
+        </div>
+      );
+    }
+  })
+
   ReactDOM.render(
-    <NVD3Chart type="discreteBarChart" datum={datum} x="label" y="value" />,
+    <Chart />,
     document.getElementById('barChart')
   );
 

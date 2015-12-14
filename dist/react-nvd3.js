@@ -143,6 +143,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
+	     * Remove listeners
+	     */
+
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      this.resizeHandler.clear();
+	    }
+
+	    /**
 	     * Creates a chart model and render it
 	     */
 
@@ -165,8 +175,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _d2.default.select(this.refs.svg).datum(this.props.datum).call(this.chart);
 
 	      // Update the chart if the window size change.
-	      // TODO: review posible leak.
-	      _nvd2.default.utils.windowResize(this.chart.update);
+	      // Save resizeHandle to remove the resize listener later.
+	      this.resizeHandler = _nvd2.default.utils.windowResize(this.chart.update);
+
 	      return this.chart;
 	    }
 
