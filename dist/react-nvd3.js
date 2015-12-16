@@ -176,7 +176,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      // Update the chart if the window size change.
 	      // Save resizeHandle to remove the resize listener later.
-	      this.resizeHandler = _nvd2.default.utils.windowResize(this.chart.update);
+	      if (!this.resizeHandler) this.resizeHandler = _nvd2.default.utils.windowResize(this.chart.update);
 
 	      return this.chart;
 	    }

@@ -63,7 +63,8 @@ export default class NVD3Chart extends React.Component {
 
       // Update the chart if the window size change.
       // Save resizeHandle to remove the resize listener later.
-      this.resizeHandler = nv.utils.windowResize(this.chart.update);
+      if(!this.resizeHandler)
+        this.resizeHandler = nv.utils.windowResize(this.chart.update);
 
       return this.chart;
   }
