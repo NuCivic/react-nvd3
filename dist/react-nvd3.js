@@ -108,10 +108,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var SETTINGS = ['x', 'y', 'width', 'height', 'type', 'datum', 'configure'];
+	var SETTINGS = ['x', 'y', 'type', 'datum', 'configure', 'tooltip', 'legend'];
 	var AXIS_NAMES = ['xAxis', 'yAxis', 'y1Axis', 'y2Axis', 'y3Axis', 'y4Axis', 'x2Axis'];
 	var SIZE = ['width', 'height'];
 	var MARGIN = 'margin';
+	var LEGEND = 'legend';
+	var TOOLTIP = 'tooltip';
 
 	var NVD3Chart = (function (_React$Component) {
 	  (0, _inherits3.default)(NVD3Chart, _React$Component);
@@ -165,8 +167,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.chart.x(this.getValueFunction(this.props.x, 'x')).y(this.getValueFunction(this.props.y, 'y')).margin(this.options(MARGIN, _utils.pick).margin || this.propsByPrefix('margin') || {}).options(this.options(SETTINGS.concat(AXIS_NAMES, SIZE, MARGIN), _utils.without));
 
-	      // We need to set the axis options separatly
-	      this.setAxisOptions(this.chart, this.options(AXIS_NAMES));
+	      // We need to set the axis, legend and tooltip components separatly
+	      this.configureComponents(this.chart, this.options(AXIS_NAMES.concat(TOOLTIP, LEGEND)));
 
 	      // hook for configuring the chart
 	      !this.props.configure || this.props.configure(this.chart);
@@ -182,19 +184,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * Configure axis options recursively
+	     * Configure components recursively
 	     * @param {nvd3 chart} chart  A nvd3 chart instance
 	     * @param {object} options    A key value object
 	     */
 
 	  }, {
-	    key: 'setAxisOptions',
-	    value: function setAxisOptions(chart, options) {
+	    key: 'configureComponents',
+	    value: function configureComponents(chart, options) {
 	      for (var optionName in options) {
 	        var optionValue = options[optionName];
 	        if (chart) {
 	          if ((typeof optionValue === 'undefined' ? 'undefined' : (0, _typeof3.default)(optionValue)) === 'object' && !(optionValue instanceof Array)) {
-	            this.setAxisOptions(chart[optionName], optionValue);
+	            this.configureComponents(chart[optionName], optionValue);
 	          } else if (typeof chart[optionName] === 'function') {
 	            chart[optionName](optionValue);
 	          }

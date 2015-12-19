@@ -3,10 +3,12 @@ import d3 from 'd3';
 import nv from 'nvd3';
 import {pick, without} from './utils.js'
 
-let SETTINGS = ['x', 'y', 'width', 'height', 'type', 'datum', 'configure'];
+let SETTINGS = ['x', 'y', 'type', 'datum', 'configure', 'tooltip', 'legend'];
 let AXIS_NAMES = ['xAxis', 'yAxis','y1Axis', 'y2Axis','y3Axis' , 'y4Axis', 'x2Axis'];
 let SIZE = ['width', 'height'];
 let MARGIN = 'margin';
+let LEGEND = 'legend';
+let TOOLTIP = 'tooltip';
 
 export default class NVD3Chart extends React.Component {
   static propTypes: {
@@ -50,8 +52,8 @@ export default class NVD3Chart extends React.Component {
         .margin(this.options(MARGIN, pick).margin || this.propsByPrefix('margin') || {})
         .options(this.options(SETTINGS.concat(AXIS_NAMES, SIZE, MARGIN), without));
 
-      // We need to set the axis options separatly
-      this.setAxisOptions(this.chart, this.options(AXIS_NAMES));
+      // We need to set the axis, legend and tooltip components separatly
+      this.configureComponents(this.chart, this.options(AXIS_NAMES.concat(TOOLTIP, LEGEND)));
 
       // hook for configuring the chart
       !this.props.configure || this.props.configure(this.chart);
@@ -70,16 +72,16 @@ export default class NVD3Chart extends React.Component {
   }
 
   /**
-   * Configure axis options recursively
+   * Configure components recursively
    * @param {nvd3 chart} chart  A nvd3 chart instance
    * @param {object} options    A key value object
    */
-  setAxisOptions(chart, options) {
+  configureComponents(chart, options) {
     for(let optionName in options){
       let optionValue = options[optionName];
       if(chart) {
         if(typeof optionValue === 'object' && !(optionValue instanceof Array)){
-          this.setAxisOptions(chart[optionName], optionValue);
+          this.configureComponents(chart[optionName], optionValue);
         } else if(typeof chart[optionName] === 'function'){
           chart[optionName](optionValue);
         }

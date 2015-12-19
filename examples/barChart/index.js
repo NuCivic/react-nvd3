@@ -50,7 +50,7 @@
       var chart;
 
       if(this.state.visible) {
-        chart = <NVD3Chart type="discreteBarChart" datum={datum} x="label" y="value" />;
+        chart = <NVD3Chart tooltip={{enabled: true}} type="discreteBarChart" datum={datum} x="label" y="value" />;
       }
 
       return (
