@@ -3,7 +3,7 @@ var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var webpack = require('gulp-webpack');
 var concat = require('gulp-concat');
-var browserSync = require('browser-sync');
+var browserSync = require('browser-sync').create();
 
 gulp.task('js', function () {
   gulp.src('index.js')
@@ -19,12 +19,12 @@ gulp.task('js-watch', ['js'], browserSync.reload);
 
 // use default task to launch Browsersync and watch JS files
 gulp.task('serve', ['js'], function () {
-    browserSync({
-        server: {
-            baseDir: "./"
-        }
-    });
-    gulp.watch("index.js", ['js-watch']);
+  browserSync.init({
+    server: {
+      baseDir: "./"
+    }
+  });
+  gulp.watch("index.js", ['js-watch']);
 });
 
 gulp.task('default', ['js']);
