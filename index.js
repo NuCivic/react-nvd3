@@ -35,7 +35,8 @@ export default class NVD3Chart extends React.Component {
    * Remove listeners
    */
   componentWillUnmount() {
-    this.resizeHandler.clear();
+    if(this.resizeHandler)
+      this.resizeHandler.clear();
   }
 
   /**
