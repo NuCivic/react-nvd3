@@ -9,6 +9,7 @@ let SIZE = ['width', 'height'];
 let MARGIN = 'margin';
 let LEGEND = 'legend';
 let TOOLTIP = 'tooltip';
+let CONTAINER_STYLE = 'containerStyle'
 
 export default class NVD3Chart extends React.Component {
   static propTypes: {
@@ -51,7 +52,7 @@ export default class NVD3Chart extends React.Component {
         .x(this.getValueFunction(this.props.x, 'x'))
         .y(this.getValueFunction(this.props.y, 'y'))
         .margin(this.options(MARGIN, pick).margin || this.propsByPrefix('margin') || {})
-        .options(this.options(SETTINGS.concat(AXIS_NAMES, SIZE, MARGIN), without));
+        .options(this.options(SETTINGS.concat(AXIS_NAMES, SIZE, MARGIN, CONTAINER_STYLE), without));
 
       // We need to set the axis, legend and tooltip components separatly
       this.configureComponents(this.chart, this.options(AXIS_NAMES.concat(TOOLTIP, LEGEND)));
@@ -136,7 +137,7 @@ export default class NVD3Chart extends React.Component {
    */
   render() {
     return (
-      <div ref="root" className="nv-chart">
+      <div ref="root" className="nv-chart" style={this.props.containerStyle} >
         <svg ref="svg" {...pick(this.props, SIZE)}></svg>
       </div>
     );
