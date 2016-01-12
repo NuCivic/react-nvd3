@@ -14,7 +14,7 @@ export default class NVD3Chart extends React.Component {
   static propTypes: {
     type: React.PropTypes.string.isRequired,
     configure: React.PropTypes.func
-  }
+  };
 
   /**
    * Instantiate a new chart setting
