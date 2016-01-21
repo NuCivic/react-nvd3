@@ -21,10 +21,11 @@ gulp.task('js-watch', ['js'], browserSync.reload);
 gulp.task('serve', ['js'], function () {
   browserSync.init({
     server: {
-      baseDir: "./"
-    }
+      baseDir: './',
+    },
+    open: false
   });
-  gulp.watch("index.js", ['js-watch']);
+  gulp.watch(['./src/*', './examples/**/*.js'], ['js-watch']);
 });
 
 gulp.task('default', ['js']);

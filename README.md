@@ -163,6 +163,20 @@ For more information about the available options you could check the nvd3 docume
 
 **NOTICE:** An extensive documentation with examples is embeded in the repository https://github.com/novus/nvd3/blob/master/examples/documentation.html . If you want to check it just clone it and open that file.
 
+#### Configure nested nvd3 components
+If you need to configure nested nvd3 components you need to pass a nested object with the configurations to the property that match with the nested component.
+
+Suppose you need to disable tooltips in your charts:
+
+```javascript
+  React.render(
+    <NVD3Chart tooltip={{enabled: true}} id="barChart" type="discreteBarChart" showValues="true" datum={datum} x="x" y="value"/>,
+    document.getElementById('barChart')
+  );
+```
+
+In this case we are passing the nested object to configure the tooltip. This is also applicable to axis components.
+
 ### Do you want to load a chart from your database?
 Since react allow you to use a plain javascript syntax to pass props then you could do this:
 
@@ -193,7 +207,30 @@ $.getJSON('/mychartendpoint/1',function(chart){
 });
 ```
 
-**NOTICE:** Currently axis formats can't be serialized because they are functions. In further versions a way to store those parameters will be provided.
+#### Ok, but what about axis formatters and other functions?
+Formatters are functions and we don't want to stored them in a database. If you want to persist your chart state somewhere you need to have a plain json object. 
+
+Instead of persist your function implementations in your json you need to create a reference from the json object and pass those functions by context at the moment you instantiate the chart. 
+
+Suppose you have a function called getColor to assign the colors in your charts. In this case you'll need to create a context object with the getColor function implementation inside and pass the reference to the color property.
+
+Function references have this format: ```{name:'functionNameInContext', type:'function'}```.
+
+Let's see an example:
+
+```javascript
+var context = {
+  getColor: function(i){
+    var colors = d3.scale.category20().range().slice(10);
+    return colors[Math.floor(Math.random() * colors.length)];    
+  }
+};
+
+ReactDOM.render(
+<NVD3Chart context={context} color={{name:'getColor', type:'function'}} type="discreteBarChart" datum={datum} x="label" y="value" />,
+document.getElementById('barChart')
+);
+```
 
 ## Developers
 Source code is pretty straightforward. You can take a look at https://github.com/NuCivic/react-nvd3/blob/master/index.js.
@@ -209,4 +246,6 @@ Source code is pretty straightforward. You can take a look at https://github.com
 * npm install
 * gulp serve
 * open any example http://localhost:3000/examples/barChart/
+
+
 

@@ -1,14 +1,17 @@
 import React from 'react';
 import d3 from 'd3';
 import nv from 'nvd3';
-import {pick, without} from './utils.js'
+import {
+  pick,
+  without,
+  isPlainObject,
+  bindFunctions,
+  getValueFunction
+} from './utils.js';
 
-let SETTINGS = ['x', 'y', 'type', 'datum', 'configure', 'tooltip', 'legend'];
-let AXIS_NAMES = ['xAxis', 'yAxis','y1Axis', 'y2Axis','y3Axis' , 'y4Axis', 'x2Axis'];
+let SETTINGS = ['x', 'y', 'type', 'datum', 'configure'];
 let SIZE = ['width', 'height'];
 let MARGIN = 'margin';
-let LEGEND = 'legend';
-let TOOLTIP = 'tooltip';
 
 export default class NVD3Chart extends React.Component {
   static propTypes: {
@@ -46,14 +49,15 @@ export default class NVD3Chart extends React.Component {
       // passed to the margin function.
       this.chart = this.chart || nv.models[this.props.type]();
 
-      this.chart
-        .x(this.getValueFunction(this.props.x, 'x'))
-        .y(this.getValueFunction(this.props.y, 'y'))
-        .margin(this.options(MARGIN, pick).margin || this.propsByPrefix('margin') || {})
-        .options(this.options(SETTINGS.concat(AXIS_NAMES, SIZE, MARGIN), without));
+      this.parsedProps = bindFunctions(this.props, this.props.context);
 
-      // We need to set the axis, legend and tooltip components separatly
-      this.configureComponents(this.chart, this.options(AXIS_NAMES.concat(TOOLTIP, LEGEND)));
+      this.chart
+        .x(getValueFunction(this.parsedProps.x, 'x'))
+        .y(getValueFunction(this.parsedProps.y, 'y'))
+        .margin(this.options(MARGIN, pick).margin || {});
+
+      // Configure componentes recursively
+      this.configureComponents(this.chart, this.options(SETTINGS, without));
 
       // hook for configuring the chart
       !this.props.configure || this.props.configure(this.chart);
@@ -80,7 +84,7 @@ export default class NVD3Chart extends React.Component {
     for(let optionName in options){
       let optionValue = options[optionName];
       if(chart) {
-        if(typeof optionValue === 'object' && !(optionValue instanceof Array)){
+        if(isPlainObject(optionValue)){
           this.configureComponents(chart[optionName], optionValue);
         } else if(typeof chart[optionName] === 'function'){
           chart[optionName](optionValue);
@@ -95,38 +99,9 @@ export default class NVD3Chart extends React.Component {
    * @param {Function} predicate  The function used to filter keys
    */
   options(keys, predicate) {
-    if(this.props.chartOptions) console.warn('chartOptions is deprecated use options instead');
-    // DEPRECATED: this.props.chartOptions
-    let opt = this.props.options || this.props.chartOptions || this.props;
+    let opt = this.parsedProps.options || this.parsedProps;
     predicate = predicate || pick;
     return predicate(opt, keys);
-  }
-
-  /**
-   * Allow to use either a value or a function to
-   * @param  {[type]} v        Either a getter or a function name
-   * @param  {String} _default A default string used as getter
-   * @return {Function}        Returns a function to use as getter
-   */
-  getValueFunction(v, _default) {
-    if(typeof v === 'function') return v;
-    return (d) => { return typeof d[v] !== 'undefined' ? d[v] : d[_default]; }
-  }
-
-  /**
-   * Get properties using a prefix
-   * @param  {String} prefix
-   * @return {[type]} Return an object with wanted keys
-   * DEPRECATED: This was created only for margins and
-   * since we changed the api we don't need this anymore.
-   */
-  propsByPrefix(prefix) {
-    console.warn('Set margin with prefixes is deprecated use an object instead');
-    prefix = prefix + '-';
-    return Object.keys(this.props).reduce((memo, prop) => {
-      if (prop.startsWith(prefix)) memo[prop.replace(prefix, '')] = this.props[prop];
-      return memo;
-    }, {});
   }
 
   /**
