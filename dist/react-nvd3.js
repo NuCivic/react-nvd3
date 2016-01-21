@@ -103,6 +103,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var SETTINGS = ['x', 'y', 'type', 'datum', 'configure'];
 	var SIZE = ['width', 'height'];
 	var MARGIN = 'margin';
+	var LEGEND = 'legend';
+	var TOOLTIP = 'tooltip';
+	var CONTAINER_STYLE = 'containerStyle';
 
 	var NVD3Chart = (function (_React$Component) {
 	  (0, _inherits3.default)(NVD3Chart, _React$Component);
@@ -140,7 +143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
-	      this.resizeHandler.clear();
+	      if (this.resizeHandler) this.resizeHandler.clear();
 	    }
 
 	    /**
@@ -156,10 +159,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.parsedProps = (0, _utils.bindFunctions)(this.props, this.props.context);
 
-	      this.chart.x((0, _utils.getValueFunction)(this.parsedProps.x, 'x')).y((0, _utils.getValueFunction)(this.parsedProps.y, 'y')).margin(this.options(MARGIN, _utils.pick).margin || {});
+	      this.chart.x((0, _utils.getValueFunction)(this.parsedProps.x, 'x')).y((0, _utils.getValueFunction)(this.parsedProps.y, 'y')).margin(this.options(MARGIN, _utils.pick).margin || (0, _utils.propsByPrefix)('margin', this.props) || {});
 
 	      // Configure componentes recursively
-	      this.configureComponents(this.chart, this.options(SETTINGS, _utils.without));
+	      this.configureComponents(this.chart, this.options(SETTINGS.concat(CONTAINER_STYLE), _utils.without));
 
 	      // hook for configuring the chart
 	      !this.props.configure || this.props.configure(this.chart);
@@ -204,7 +207,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'options',
 	    value: function options(keys, predicate) {
-	      var opt = this.parsedProps.options || this.parsedProps;
+	      // DEPRECATED: this.props.chartOptions
+	      var opt = this.parsedProps.options || this.parsedProps || this.props.chartOptions;
 	      predicate = predicate || _utils.pick;
 	      return predicate(opt, keys);
 	    }
@@ -219,7 +223,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { ref: 'root', className: 'nv-chart' },
+	        { ref: 'root', className: 'nv-chart', style: this.props.containerStyle },
 	        _react2.default.createElement('svg', (0, _extends3.default)({ ref: 'svg' }, (0, _utils.pick)(this.props, SIZE)))
 	      );
 	    }
@@ -1206,6 +1210,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.isPlainObject = isPlainObject;
 	exports.bindFunctions = bindFunctions;
 	exports.getValueFunction = getValueFunction;
+	exports.propsByPrefix = propsByPrefix;
 
 	var _getPrototypeOf = __webpack_require__(17);
 
@@ -1336,6 +1341,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return function (d) {
 	    return typeof d[v] !== 'undefined' ? d[v] : d[_default];
 	  };
+	}
+
+	/**
+	 * Get properties using a prefix
+	 * @param  {String} prefix
+	 * @return {[type]} Return an object with wanted keys
+	 * DEPRECATED: This was created only for margins and
+	 * since we changed the api we don't need this anymore.
+	 */
+	function propsByPrefix(prefix, props) {
+	  console.warn('Set margin with prefixes is deprecated use an object instead');
+	  prefix = prefix + '-';
+	  return (0, _keys2.default)(props).reduce(function (memo, prop) {
+	    if (prop.startsWith(prefix)) memo[prop.replace(prefix, '')] = props[prop];
+	    return memo;
+	  }, {});
 	}
 
 /***/ },

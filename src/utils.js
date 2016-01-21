@@ -112,3 +112,19 @@ export function getValueFunction(v, _default) {
   if(typeof v === 'function') return v;
   return (d) => { return typeof d[v] !== 'undefined' ? d[v] : d[_default]; }
 }
+
+/**
+ * Get properties using a prefix
+ * @param  {String} prefix
+ * @return {[type]} Return an object with wanted keys
+ * DEPRECATED: This was created only for margins and
+ * since we changed the api we don't need this anymore.
+ */
+export function propsByPrefix(prefix, props) {
+  console.warn('Set margin with prefixes is deprecated use an object instead');
+  prefix = prefix + '-';
+  return Object.keys(props).reduce((memo, prop) => {
+    if (prop.startsWith(prefix)) memo[prop.replace(prefix, '')] = props[prop];
+    return memo;
+  }, {});
+}

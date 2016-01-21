@@ -6,18 +6,22 @@ import {
   without,
   isPlainObject,
   bindFunctions,
-  getValueFunction
+  getValueFunction,
+  propsByPrefix
 } from './utils.js';
 
 let SETTINGS = ['x', 'y', 'type', 'datum', 'configure'];
 let SIZE = ['width', 'height'];
 let MARGIN = 'margin';
+let LEGEND = 'legend';
+let TOOLTIP = 'tooltip';
+let CONTAINER_STYLE = 'containerStyle'
 
 export default class NVD3Chart extends React.Component {
   static propTypes: {
     type: React.PropTypes.string.isRequired,
     configure: React.PropTypes.func
-  }
+  };
 
   /**
    * Instantiate a new chart setting
@@ -38,7 +42,8 @@ export default class NVD3Chart extends React.Component {
    * Remove listeners
    */
   componentWillUnmount() {
-    this.resizeHandler.clear();
+    if(this.resizeHandler)
+      this.resizeHandler.clear();
   }
 
   /**
@@ -54,10 +59,10 @@ export default class NVD3Chart extends React.Component {
       this.chart
         .x(getValueFunction(this.parsedProps.x, 'x'))
         .y(getValueFunction(this.parsedProps.y, 'y'))
-        .margin(this.options(MARGIN, pick).margin || {});
+        .margin(this.options(MARGIN, pick).margin || propsByPrefix('margin', this.props) || {});
 
       // Configure componentes recursively
-      this.configureComponents(this.chart, this.options(SETTINGS, without));
+      this.configureComponents(this.chart, this.options(SETTINGS.concat(CONTAINER_STYLE), without));
 
       // hook for configuring the chart
       !this.props.configure || this.props.configure(this.chart);
@@ -99,7 +104,8 @@ export default class NVD3Chart extends React.Component {
    * @param {Function} predicate  The function used to filter keys
    */
   options(keys, predicate) {
-    let opt = this.parsedProps.options || this.parsedProps;
+	  // DEPRECATED: this.props.chartOptions
+    let opt = this.parsedProps.options || this.parsedProps || this.props.chartOptions;
     predicate = predicate || pick;
     return predicate(opt, keys);
   }
@@ -110,7 +116,7 @@ export default class NVD3Chart extends React.Component {
    */
   render() {
     return (
-      <div ref="root" className="nv-chart">
+      <div ref="root" className="nv-chart" style={this.props.containerStyle} >
         <svg ref="svg" {...pick(this.props, SIZE)}></svg>
       </div>
     );
