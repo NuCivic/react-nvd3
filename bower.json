@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "d3": "^3.4.4",
-    "nvd3": "novus/nvd3#5992b889c6ce8e108d42b73c6382c8863980e34a",
+    "nvd3": "^1.8.2",
     "react": "^0.14.3",
     "react-dom": "^0.14.3"
   },
