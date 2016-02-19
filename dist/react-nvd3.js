@@ -153,9 +153,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderChart',
 	    value: function renderChart() {
-	      // Margins are an special case. It needs to be
-	      // passed to the margin function.
-	      this.chart = this.chart || _nvd2.default.models[this.props.type]();
+	      var dispacher = undefined;
+
+	      // We try to reuse the current chart instance. If not possible then lets instantiate again
+	      this.chart = this.chart && !this.rendering ? this.chart : _nvd2.default.models[this.props.type]();
 
 	      this.parsedProps = (0, _utils.bindFunctions)(this.props, this.props.context);
 
@@ -168,13 +169,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	      !this.props.configure || this.props.configure(this.chart);
 
 	      // Render chart using d3
-	      _d2.default.select(this.refs.svg).datum(this.props.datum).call(this.chart);
+	      this.selection = _d2.default.select(this.refs.svg).datum(this.props.datum).call(this.chart);
 
 	      // Update the chart if the window size change.
 	      // Save resizeHandle to remove the resize listener later.
 	      if (!this.resizeHandler) this.resizeHandler = _nvd2.default.utils.windowResize(this.chart.update);
 
+	      // PieCharts are an special case. Their dispacher is the pie component inside the chart.
+	      dispacher = this.props.type === 'pieChart' ? this.chart.pie : this.chart;
+	      dispacher.dispatch.on('renderEnd', this.renderEnd);
+	      this.rendering = true;
+
 	      return this.chart;
+	    }
+
+	    /**
+	     * Render end callback function
+	     * @param  {Event} e
+	     */
+
+	  }, {
+	    key: 'renderEnd',
+	    value: function renderEnd(e) {
+
+	      // Once renders end then we set rendering to false to allow to reuse the chart instance.
+	      this.rendering = false;
 	    }
 
 	    /**

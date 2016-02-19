@@ -50,9 +50,10 @@ export default class NVD3Chart extends React.Component {
    * Creates a chart model and render it
    */
   renderChart() {
-      // Margins are an special case. It needs to be
-      // passed to the margin function.
-      this.chart = this.chart || nv.models[this.props.type]();
+      let dispacher;
+
+      // We try to reuse the current chart instance. If not possible then lets instantiate again
+      this.chart = (this.chart && !this.rendering) ? this.chart : nv.models[this.props.type]();
 
       this.parsedProps = bindFunctions(this.props, this.props.context);
 
@@ -68,7 +69,7 @@ export default class NVD3Chart extends React.Component {
       !this.props.configure || this.props.configure(this.chart);
 
       // Render chart using d3
-      d3.select(this.refs.svg)
+      this.selection = d3.select(this.refs.svg)
         .datum(this.props.datum)
         .call(this.chart);
 
@@ -77,7 +78,22 @@ export default class NVD3Chart extends React.Component {
       if(!this.resizeHandler)
         this.resizeHandler = nv.utils.windowResize(this.chart.update);
 
+      // PieCharts are an special case. Their dispacher is the pie component inside the chart.
+      dispacher = (this.props.type === 'pieChart') ? this.chart.pie : this.chart;
+      dispacher.dispatch.on('renderEnd', this.renderEnd);
+      this.rendering = true;
+
       return this.chart;
+  }
+
+  /**
+   * Render end callback function
+   * @param  {Event} e
+   */
+  renderEnd(e) {
+
+    // Once renders end then we set rendering to false to allow to reuse the chart instance.
+    this.rendering = false;
   }
 
   /**
