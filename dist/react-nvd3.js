@@ -224,11 +224,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _react2.default.createElement(
 	        'div',
 	        { ref: 'root', className: 'nv-chart', style: this.props.containerStyle },
-	        _react2.default.createElement(
-	          ReactTransitionGroup,
-	          null,
-	          _react2.default.createElement('svg', (0, _extends3.default)({ ref: 'svg' }, (0, _utils.pick)(this.props, SIZE)))
-	        )
+	        _react2.default.createElement('svg', (0, _extends3.default)({ ref: 'svg' }, (0, _utils.pick)(this.props, SIZE)))
 	      );
 	    }
 	  }]);

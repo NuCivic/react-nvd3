@@ -117,9 +117,7 @@ export default class NVD3Chart extends React.Component {
   render() {
     return (
       <div ref="root" className="nv-chart" style={this.props.containerStyle} >
-        <ReactTransitionGroup>
-          <svg ref="svg" {...pick(this.props, SIZE)}></svg>
-        </ReactTransitionGroup>
+        <svg ref="svg" {...pick(this.props, SIZE)}></svg>
       </div>
     );
   }
