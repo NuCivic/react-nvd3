@@ -19,7 +19,8 @@
     "d3": "^3.4.4",
     "nvd3": "^1.8.2",
     "react": "^0.14.3",
-    "react-dom": "^0.14.3"
+    "react-dom": "^0.14.3",
+    "babel-polyfill": "^6.5.0"
   },
   "license": "MIT"
 }

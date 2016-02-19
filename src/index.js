@@ -1,6 +1,3 @@
-import React from 'react';
-import d3 from 'd3';
-import nv from 'nvd3';
 import {
   pick,
   without,
@@ -117,7 +114,9 @@ export default class NVD3Chart extends React.Component {
   render() {
     return (
       <div ref="root" className="nv-chart" style={this.props.containerStyle} >
-        <svg ref="svg" {...pick(this.props, SIZE)}></svg>
+        <ReactTransitionGroup>
+          <svg ref="svg" {...pick(this.props, SIZE)}></svg>
+        </ReactTransitionGroup>
       </div>
     );
   }

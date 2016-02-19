@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("react"), require("d3"), require("nvd3"));
+		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define(["react", "d3", "nvd3"], factory);
+		define([], factory);
 	else if(typeof exports === 'object')
-		exports["NVD3Chart"] = factory(require("react"), require("d3"), require("nvd3"));
+		exports["NVD3Chart"] = factory();
 	else
-		root["NVD3Chart"] = factory(root["React"], root["d3"], root["nv"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_55__, __WEBPACK_EXTERNAL_MODULE_56__, __WEBPACK_EXTERNAL_MODULE_57__) {
+		root["NVD3Chart"] = factory();
+})(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -84,19 +84,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _inherits3 = _interopRequireDefault(_inherits2);
 
-	var _react = __webpack_require__(55);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _d = __webpack_require__(56);
-
-	var _d2 = _interopRequireDefault(_d);
-
-	var _nvd = __webpack_require__(57);
-
-	var _nvd2 = _interopRequireDefault(_nvd);
-
-	var _utils = __webpack_require__(58);
+	var _utils = __webpack_require__(55);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -123,7 +111,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * a callback if exists
 	     */
 	    value: function componentDidMount() {
-	      _nvd2.default.addGraph(this.renderChart.bind(this), this.props.renderEnd);
+	      nv.addGraph(this.renderChart.bind(this), this.props.renderEnd);
 	    }
 
 	    /**
@@ -155,7 +143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function renderChart() {
 	      // Margins are an special case. It needs to be
 	      // passed to the margin function.
-	      this.chart = this.chart || _nvd2.default.models[this.props.type]();
+	      this.chart = this.chart || nv.models[this.props.type]();
 
 	      this.parsedProps = (0, _utils.bindFunctions)(this.props, this.props.context);
 
@@ -168,11 +156,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      !this.props.configure || this.props.configure(this.chart);
 
 	      // Render chart using d3
-	      _d2.default.select(this.refs.svg).datum(this.props.datum).call(this.chart);
+	      d3.select(this.refs.svg).datum(this.props.datum).call(this.chart);
 
 	      // Update the chart if the window size change.
 	      // Save resizeHandle to remove the resize listener later.
-	      if (!this.resizeHandler) this.resizeHandler = _nvd2.default.utils.windowResize(this.chart.update);
+	      if (!this.resizeHandler) this.resizeHandler = nv.utils.windowResize(this.chart.update);
 
 	      return this.chart;
 	    }
@@ -221,15 +209,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
+	      return React.createElement(
 	        'div',
 	        { ref: 'root', className: 'nv-chart', style: this.props.containerStyle },
-	        _react2.default.createElement('svg', (0, _extends3.default)({ ref: 'svg' }, (0, _utils.pick)(this.props, SIZE)))
+	        React.createElement(
+	          ReactTransitionGroup,
+	          null,
+	          React.createElement('svg', (0, _extends3.default)({ ref: 'svg' }, (0, _utils.pick)(this.props, SIZE)))
+	        )
 	      );
 	    }
 	  }]);
 	  return NVD3Chart;
-	})(_react2.default.Component);
+	})(React.Component);
 
 	// Babel 6 issue: http://stackoverflow.com/questions/33505992/babel-6-changes-how-it-exports-default
 
@@ -1177,24 +1169,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 55 */
-/***/ function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_55__;
-
-/***/ },
-/* 56 */
-/***/ function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_56__;
-
-/***/ },
-/* 57 */
-/***/ function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_57__;
-
-/***/ },
-/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1220,7 +1194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _typeof3 = _interopRequireDefault(_typeof2);
 
-	var _keys = __webpack_require__(59);
+	var _keys = __webpack_require__(56);
 
 	var _keys2 = _interopRequireDefault(_keys);
 
@@ -1360,20 +1334,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 59 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(60), __esModule: true };
+	module.exports = { "default": __webpack_require__(57), __esModule: true };
 
 /***/ },
-/* 60 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(61);
+	__webpack_require__(58);
 	module.exports = __webpack_require__(7).Object.keys;
 
 /***/ },
-/* 61 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.14 Object.keys(O)
