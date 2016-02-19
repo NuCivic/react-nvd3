@@ -124,7 +124,7 @@ export function propsByPrefix(prefix, props) {
   console.warn('Set margin with prefixes is deprecated use an object instead');
   prefix = prefix + '-';
   return Object.keys(props).reduce((memo, prop) => {
-    if (prop.startsWith(prefix)) memo[prop.replace(prefix, '')] = props[prop];
+    if (prop.substr(0, prefix.length) === prefix) memo[prop.replace(prefix, '')] = props[prop];
     return memo;
   }, {});
 }
