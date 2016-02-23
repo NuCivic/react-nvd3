@@ -7,7 +7,8 @@ import {
   isPlainObject,
   bindFunctions,
   getValueFunction,
-  propsByPrefix
+  propsByPrefix,
+  isCallable
 } from './utils.js';
 
 let SETTINGS = ['x', 'y', 'type', 'datum', 'configure'];
@@ -16,6 +17,10 @@ let MARGIN = 'margin';
 let LEGEND = 'legend';
 let TOOLTIP = 'tooltip';
 let CONTAINER_STYLE = 'containerStyle'
+
+const RENDER_START = 'renderStart';
+const RENDER_END = 'renderEnd';
+const READY = 'ready';
 
 export default class NVD3Chart extends React.Component {
   static propTypes: {
@@ -28,7 +33,9 @@ export default class NVD3Chart extends React.Component {
    * a callback if exists
    */
   componentDidMount() {
-    nv.addGraph(this.renderChart.bind(this), this.props.renderEnd);
+    nv.addGraph(this.renderChart.bind(this), (chart) => {
+      if(isCallable(this.props.ready)) this.props.ready(chart, READY);
+    });
   }
 
   /**
@@ -55,6 +62,9 @@ export default class NVD3Chart extends React.Component {
       // We try to reuse the current chart instance. If not possible then lets instantiate again
       this.chart = (this.chart && !this.rendering) ? this.chart : nv.models[this.props.type]();
 
+      if(isCallable(this.props.renderStart))
+        this.props.renderStart(this.chart, RENDER_START);
+
       this.parsedProps = bindFunctions(this.props, this.props.context);
 
       this.chart
@@ -80,7 +90,7 @@ export default class NVD3Chart extends React.Component {
 
       // PieCharts are an special case. Their dispacher is the pie component inside the chart.
       dispacher = (this.props.type === 'pieChart') ? this.chart.pie : this.chart;
-      dispacher.dispatch.on('renderEnd', this.renderEnd);
+      dispacher.dispatch.on('renderEnd', this.renderEnd.bind(this));
       this.rendering = true;
 
       return this.chart;
@@ -91,7 +101,8 @@ export default class NVD3Chart extends React.Component {
    * @param  {Event} e
    */
   renderEnd(e) {
-
+    if(isCallable(this.props.renderEnd))
+      this.props.renderEnd(this.chart, RENDER_END);
     // Once renders end then we set rendering to false to allow to reuse the chart instance.
     this.rendering = false;
   }

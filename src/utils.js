@@ -128,3 +128,7 @@ export function propsByPrefix(prefix, props) {
     return memo;
   }, {});
 }
+
+export function isCallable(value) {
+  return value && typeof value === 'function';
+}

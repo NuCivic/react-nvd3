@@ -37,6 +37,9 @@ var PieWrapper = React.createClass({
           datum={data}
           x="key"
           y="y"
+          renderEnd={function(chart, e){console.log( chart.id(), e)}}
+          renderStart={function(chart, e){console.log( chart.id(), e)}}
+          ready={function(chart, e){console.log( chart.id(), e)}}
         />
       </div>
     )

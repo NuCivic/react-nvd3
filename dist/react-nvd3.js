@@ -107,6 +107,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var TOOLTIP = 'tooltip';
 	var CONTAINER_STYLE = 'containerStyle';
 
+	var RENDER_START = 'renderStart';
+	var RENDER_END = 'renderEnd';
+	var READY = 'ready';
+
 	var NVD3Chart = (function (_React$Component) {
 	  (0, _inherits3.default)(NVD3Chart, _React$Component);
 
@@ -123,7 +127,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * a callback if exists
 	     */
 	    value: function componentDidMount() {
-	      _nvd2.default.addGraph(this.renderChart.bind(this), this.props.renderEnd);
+	      var _this2 = this;
+
+	      _nvd2.default.addGraph(this.renderChart.bind(this), function (chart) {
+	        if ((0, _utils.isCallable)(_this2.props.ready)) _this2.props.ready(chart, READY);
+	      });
 	    }
 
 	    /**
@@ -158,6 +166,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // We try to reuse the current chart instance. If not possible then lets instantiate again
 	      this.chart = this.chart && !this.rendering ? this.chart : _nvd2.default.models[this.props.type]();
 
+	      if ((0, _utils.isCallable)(this.props.renderStart)) this.props.renderStart(this.chart, RENDER_START);
+
 	      this.parsedProps = (0, _utils.bindFunctions)(this.props, this.props.context);
 
 	      this.chart.x((0, _utils.getValueFunction)(this.parsedProps.x, 'x')).y((0, _utils.getValueFunction)(this.parsedProps.y, 'y')).margin(this.options(MARGIN, _utils.pick).margin || (0, _utils.propsByPrefix)('margin', this.props) || {});
@@ -177,7 +187,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      // PieCharts are an special case. Their dispacher is the pie component inside the chart.
 	      dispacher = this.props.type === 'pieChart' ? this.chart.pie : this.chart;
-	      dispacher.dispatch.on('renderEnd', this.renderEnd);
+	      dispacher.dispatch.on('renderEnd', this.renderEnd.bind(this));
 	      this.rendering = true;
 
 	      return this.chart;
@@ -191,7 +201,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderEnd',
 	    value: function renderEnd(e) {
-
+	      if ((0, _utils.isCallable)(this.props.renderEnd)) this.props.renderEnd(this.chart, RENDER_END);
 	      // Once renders end then we set rendering to false to allow to reuse the chart instance.
 	      this.rendering = false;
 	    }
@@ -1230,6 +1240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.bindFunctions = bindFunctions;
 	exports.getValueFunction = getValueFunction;
 	exports.propsByPrefix = propsByPrefix;
+	exports.isCallable = isCallable;
 
 	var _getPrototypeOf = __webpack_require__(17);
 
@@ -1376,6 +1387,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (prop.substr(0, prefix.length) === prefix) memo[prop.replace(prefix, '')] = props[prop];
 	    return memo;
 	  }, {});
+	}
+
+	function isCallable(value) {
+	  return value && typeof value === 'function';
 	}
 
 /***/ },

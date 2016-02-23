@@ -139,12 +139,26 @@ To set chart margins you should provide an object with the wanted margins. For e
   );  
 ```
 
+
+### Events 
+
+#### ready (function)
+A function to be called right after the first transition ends. This event is triggered only once.
+
+#### renderStart (function)
+A function to be called each time the chart rendering starts.
+
 #### renderEnd (function)
-A function to be called after the chart render ends.
+A function to be called each time the chart transition ends.
 
 ```javascript 
   React.render(
-    <NVD3Chart type="discreteBarChart" datum={datum} renderEnd={mycallback}/>,
+    <NVD3Chart 
+      type="discreteBarChart" 
+      datum={datum} 
+      renderEnd={mycallbackEnd}
+      renderStart={mycallbackStart}
+      ready={mycallbackReady} />,
     document.getElementById('barChart')
   );  
 ```
