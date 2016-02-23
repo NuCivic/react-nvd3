@@ -91,7 +91,9 @@ export function bindFunctions(o, context) {
   out = Array.isArray(o) ? [] : {};
   for (key in o) {
     v = o[key];
-    if(typeof v === 'object' && v !== null && v.type !== 'function') {
+    if(v == null) {
+      continue;
+    } else if(typeof v === 'object' && v !== null && v.type !== 'function') {
       out[key] = bindFunctions(v, context);
     } else if(v.type === 'function'){
       out[key] = context[v.name];
