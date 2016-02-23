@@ -1,7 +1,7 @@
 {
   "name": "react-nvd3",
   "description": "React nvd3 reusable graph components.",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "keywords": [
     "React",
     "D3",
@@ -55,9 +55,9 @@
     "mocha": "^2.3.4"
   },
   "dependencies": {
-    "d3": "^3.5.13",
+    "d3": "^3.5.16",
     "nvd3": "^1.8.2",
     "react": "^0.14.3",
-    "react-dom": "^0.14.3"
+    "react-dom": "^0.14.7"
   }
 }
