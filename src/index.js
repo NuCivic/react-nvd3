@@ -43,6 +43,9 @@ export default class NVD3Chart extends React.Component {
    */
   componentDidUpdate() {
     this.renderChart();
+    if (this.props.renderEnd) { // trigger callback (as nvd3 chart.update does not do this)
+      this.props.renderEnd(this.chart);
+    }
   }
 
   /**
@@ -86,7 +89,12 @@ export default class NVD3Chart extends React.Component {
       // Update the chart if the window size change.
       // Save resizeHandle to remove the resize listener later.
       if(!this.resizeHandler)
-        this.resizeHandler = nv.utils.windowResize(this.chart.update);
+        this.resizeHandler = nv.utils.windowResize(function() {
+          this.chart.update();
+          if (this.props.renderEnd) { // trigger callback (as nvd3 chart.update does not do this)
+            this.props.renderEnd(this.chart);
+          }
+        }.bind(this));
 
       // PieCharts are an special case. Their dispacher is the pie component inside the chart.
       dispacher = (this.props.type === 'pieChart') ? this.chart.pie : this.chart;
