@@ -40,7 +40,11 @@
       y: 'value',
       margin: {
         left: 200
-      }
+      },
+      ready: function() { console.log('ready'); },
+      renderStart: function() { console.log('renderStart'); },
+      renderEnd: function() { console.log('renderEnd'); },
+      postUpdate: function() { console.log('postUpdate'); }
     }),
     document.getElementById('lineChart')
   );
