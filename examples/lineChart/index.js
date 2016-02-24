@@ -1,12 +1,12 @@
 
 ;(function(global){
-  function getDatum() {
+  function getDatum(j) {
     var sin = [],
         cos = [];
 
     for (var i = 0; i < 100; i++) {
-      sin.push({x: i, y: Math.sin(i/10)});
-      cos.push({x: i, y: .5 * Math.cos(i/10)});
+      sin.push({x: i, y: Math.sin(i/j)});
+      cos.push({x: i, y: .5 * Math.cos(i/j)});
     }
 
     return [
@@ -23,27 +23,47 @@
     ];
   }
 
-  var datum = getDatum();
+  var LineWrapper = React.createClass({
+    getInitialState: function() {
+      return { count: 1}
+    },
+    handleClick: function() {
+      this.setState({count: this.state.count + 1})
+    },
+    render: function() {
+      const data = (this.state.count % 2 == 0)? getDatum(10): getDatum(11);
+      return (
+        <div>
+        <button onClick={this.handleClick}>Change Data</button>
+        {
+          React.createElement(NVD3Chart, {
+            xAxis: {
+              tickFormat: function(d){ return d; },
+              axisLabel: 'Period'
+            },
+            yAxis: {
+              tickFormat: function(d) {return parseFloat(d).toFixed(2); }
+            },
+            type:'lineChart',
+            datum: data,
+            x: 'label',
+            y: 'value',
+            margin: {
+              left: 200
+            },
+            renderEnd: function(){
+              console.log('renderEnd');
+            }
+          })
+        }
+        </div>
+      )
+    }
+  });
 
   ReactDOM.render(
-    React.createElement(NVD3Chart, {
-      xAxis: {
-        tickFormat: function(d){ return d; },
-        axisLabel: 'Period'
-      },
-      yAxis: {
-        tickFormat: function(d) {return parseFloat(d).toFixed(2); }
-      },
-      type:'lineChart',
-      datum: datum,
-      x: 'label',
-      y: 'value',
-      margin: {
-        left: 200
-      }
-    }),
+    <LineWrapper name="wrapper"/>,
     document.getElementById('lineChart')
   );
-
 
 })(window);
