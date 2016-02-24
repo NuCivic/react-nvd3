@@ -161,7 +161,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderChart',
 	    value: function renderChart() {
-	      var dispacher = undefined;
+	      var dispatcher = undefined;
 
 	      // We try to reuse the current chart instance. If not possible then lets instantiate again
 	      this.chart = this.chart && !this.rendering ? this.chart : _nvd2.default.models[this.props.type]();
@@ -186,8 +186,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (!this.resizeHandler) this.resizeHandler = _nvd2.default.utils.windowResize(this.chart.update);
 
 	      // PieCharts are an special case. Their dispacher is the pie component inside the chart.
-	      dispacher = this.props.type === 'pieChart' ? this.chart.pie : this.chart;
-	      dispacher.dispatch.on('renderEnd', this.renderEnd.bind(this));
+	      // There are some charts do not feature the renderEnd event
+	      dispatcher = this.props.type === 'pieChart' ? this.chart.pie.dispatch : this.chart.dispatch;
+	      dispatcher.renderEnd && dispatcher.on('renderEnd', this.renderEnd.bind(this));
 	      this.rendering = true;
 
 	      return this.chart;
@@ -1349,7 +1350,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  out = Array.isArray(o) ? [] : {};
 	  for (key in o) {
 	    v = o[key];
-	    if ((typeof v === 'undefined' ? 'undefined' : (0, _typeof3.default)(v)) === 'object' && v !== null && v.type !== 'function') {
+	    if (v == null) {
+	      continue;
+	    } else if ((typeof v === 'undefined' ? 'undefined' : (0, _typeof3.default)(v)) === 'object' && v !== null && v.type !== 'function') {
 	      out[key] = bindFunctions(v, context);
 	    } else if (v.type === 'function') {
 	      out[key] = context[v.name];

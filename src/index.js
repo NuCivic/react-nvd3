@@ -57,7 +57,7 @@ export default class NVD3Chart extends React.Component {
    * Creates a chart model and render it
    */
   renderChart() {
-      let dispacher;
+      let dispatcher;
 
       // We try to reuse the current chart instance. If not possible then lets instantiate again
       this.chart = (this.chart && !this.rendering) ? this.chart : nv.models[this.props.type]();
@@ -89,8 +89,9 @@ export default class NVD3Chart extends React.Component {
         this.resizeHandler = nv.utils.windowResize(this.chart.update);
 
       // PieCharts are an special case. Their dispacher is the pie component inside the chart.
-      dispacher = (this.props.type === 'pieChart') ? this.chart.pie : this.chart;
-      dispacher.dispatch.on('renderEnd', this.renderEnd.bind(this));
+      // There are some charts do not feature the renderEnd event
+      dispatcher = (this.props.type === 'pieChart') ? this.chart.pie.dispatch : this.chart.dispatch;
+      dispatcher.renderEnd && dispatcher.on('renderEnd', this.renderEnd.bind(this));
       this.rendering = true;
 
       return this.chart;
