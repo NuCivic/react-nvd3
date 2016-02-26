@@ -68,9 +68,12 @@ export default class NVD3Chart extends React.Component {
       this.parsedProps = bindFunctions(this.props, this.props.context);
 
       this.chart
-        .x(getValueFunction(this.parsedProps.x, 'x'))
-        .y(getValueFunction(this.parsedProps.y, 'y'))
         .margin(this.options(MARGIN, pick).margin || propsByPrefix('margin', this.props) || {});
+
+      if(this.props.type !== 'bulletChart')
+        this.chart
+          .x(getValueFunction(this.parsedProps.x, 'x'))
+          .y(getValueFunction(this.parsedProps.y, 'y'));
 
       // Configure componentes recursively
       this.configureComponents(this.chart, this.options(SETTINGS.concat(CONTAINER_STYLE), without));
