@@ -48,6 +48,7 @@
             datum: data,
             x: 'label',
             y: 'value',
+            duration: 1,
             margin: {
               left: 200
             },

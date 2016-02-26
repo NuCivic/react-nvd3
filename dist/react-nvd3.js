@@ -111,7 +111,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var RENDER_END = 'renderEnd';
 	var READY = 'ready';
 
-	var NVD3Chart = (function (_React$Component) {
+	var NVD3Chart = function (_React$Component) {
 	  (0, _inherits3.default)(NVD3Chart, _React$Component);
 
 	  function NVD3Chart() {
@@ -121,6 +121,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  (0, _createClass3.default)(NVD3Chart, [{
 	    key: 'componentDidMount',
+
 
 	    /**
 	     * Instantiate a new chart setting
@@ -170,7 +171,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.parsedProps = (0, _utils.bindFunctions)(this.props, this.props.context);
 
-	      this.chart.x((0, _utils.getValueFunction)(this.parsedProps.x, 'x')).y((0, _utils.getValueFunction)(this.parsedProps.y, 'y')).margin(this.options(MARGIN, _utils.pick).margin || (0, _utils.propsByPrefix)('margin', this.props) || {});
+	      this.chart.x && this.chart.x((0, _utils.getValueFunction)(this.parsedProps.x, 'x'));
+	      this.chart.y && this.chart.y((0, _utils.getValueFunction)(this.parsedProps.y, 'y'));
+	      this.chart.margin(this.options(MARGIN, _utils.pick).margin || (0, _utils.propsByPrefix)('margin', this.props) || {});
 
 	      // Configure componentes recursively
 	      this.configureComponents(this.chart, this.options(SETTINGS.concat(CONTAINER_STYLE), _utils.without));
@@ -185,9 +188,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // Save resizeHandle to remove the resize listener later.
 	      if (!this.resizeHandler) this.resizeHandler = _nvd2.default.utils.windowResize(this.chart.update);
 
-	      // PieCharts are an special case. Their dispacher is the pie component inside the chart.
+	      // PieCharts and lineCharts are an special case. Their dispacher is the pie component inside the chart.
 	      // There are some charts do not feature the renderEnd event
-	      dispatcher = this.props.type === 'pieChart' ? this.chart.pie.dispatch : this.chart.dispatch;
+	      switch (this.props.type) {
+	        case 'pieChart':
+	          dispatcher = this.chart.pie.dispatch;
+	          break;
+	        case 'lineChart':
+	          dispatcher = this.chart.lines.dispatch;
+	          break;
+	        default:
+	          dispatcher = this.chart.dispatch;
+	      }
+
 	      dispatcher.renderEnd && dispatcher.on('renderEnd', this.renderEnd.bind(this));
 	      this.rendering = true;
 
@@ -259,9 +272,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }]);
 	  return NVD3Chart;
-	})(_react2.default.Component);
+	}(_react2.default.Component);
 
 	// Babel 6 issue: http://stackoverflow.com/questions/33505992/babel-6-changes-how-it-exports-default
+
 
 	exports.default = NVD3Chart;
 	module.exports = NVD3Chart;
@@ -568,19 +582,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
+	exports.__esModule = true;
+
 	exports.default = function (instance, Constructor) {
 	  if (!(instance instanceof Constructor)) {
 	    throw new TypeError("Cannot call a class as a function");
 	  }
 	};
 
-	exports.__esModule = true;
-
 /***/ },
 /* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+
+	exports.__esModule = true;
 
 	var _defineProperty = __webpack_require__(23);
 
@@ -606,8 +622,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	})();
 
-	exports.__esModule = true;
-
 /***/ },
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
@@ -629,6 +643,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
+	exports.__esModule = true;
+
 	var _typeof2 = __webpack_require__(26);
 
 	var _typeof3 = _interopRequireDefault(_typeof2);
@@ -642,8 +658,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
 	};
-
-	exports.__esModule = true;
 
 /***/ },
 /* 26 */
@@ -1232,16 +1246,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.includes = includes;
-	exports.negate = negate;
-	exports.filterObject = filterObject;
-	exports.pick = pick;
-	exports.without = without;
-	exports.isPlainObject = isPlainObject;
-	exports.bindFunctions = bindFunctions;
-	exports.getValueFunction = getValueFunction;
-	exports.propsByPrefix = propsByPrefix;
-	exports.isCallable = isCallable;
 
 	var _getPrototypeOf = __webpack_require__(17);
 
@@ -1254,6 +1258,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _keys = __webpack_require__(59);
 
 	var _keys2 = _interopRequireDefault(_keys);
+
+	exports.includes = includes;
+	exports.negate = negate;
+	exports.filterObject = filterObject;
+	exports.pick = pick;
+	exports.without = without;
+	exports.isPlainObject = isPlainObject;
+	exports.bindFunctions = bindFunctions;
+	exports.getValueFunction = getValueFunction;
+	exports.propsByPrefix = propsByPrefix;
+	exports.isCallable = isCallable;
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

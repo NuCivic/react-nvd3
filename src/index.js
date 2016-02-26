@@ -67,10 +67,9 @@ export default class NVD3Chart extends React.Component {
 
       this.parsedProps = bindFunctions(this.props, this.props.context);
 
-      this.chart
-        .x(getValueFunction(this.parsedProps.x, 'x'))
-        .y(getValueFunction(this.parsedProps.y, 'y'))
-        .margin(this.options(MARGIN, pick).margin || propsByPrefix('margin', this.props) || {});
+      this.chart.x && this.chart.x(getValueFunction(this.parsedProps.x, 'x'))
+      this.chart.y && this.chart.y(getValueFunction(this.parsedProps.y, 'y'))
+      this.chart.margin(this.options(MARGIN, pick).margin || propsByPrefix('margin', this.props) || {});
 
       // Configure componentes recursively
       this.configureComponents(this.chart, this.options(SETTINGS.concat(CONTAINER_STYLE), without));
@@ -88,9 +87,19 @@ export default class NVD3Chart extends React.Component {
       if(!this.resizeHandler)
         this.resizeHandler = nv.utils.windowResize(this.chart.update);
 
-      // PieCharts are an special case. Their dispacher is the pie component inside the chart.
+      // PieCharts and lineCharts are an special case. Their dispacher is the pie component inside the chart.
       // There are some charts do not feature the renderEnd event
-      dispatcher = (this.props.type === 'pieChart') ? this.chart.pie.dispatch : this.chart.dispatch;
+      switch(this.props.type) {
+        case 'pieChart':
+          dispatcher = this.chart.pie.dispatch;
+          break
+        case 'lineChart':
+          dispatcher = this.chart.lines.dispatch;
+          break
+        default:
+          dispatcher = this.chart.dispatch;
+      }
+
       dispatcher.renderEnd && dispatcher.on('renderEnd', this.renderEnd.bind(this));
       this.rendering = true;
 
