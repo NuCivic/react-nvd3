@@ -152,9 +152,11 @@ export default class NVD3Chart extends React.Component {
    * svg element needs to have height and width.
    */
   render() {
+    let size = pick(this.props, SIZE);
+    let style = Object.assign({}, size, this.props.containerStyle);
     return (
-      <div ref="root" className="nv-chart" style={this.props.containerStyle} >
-        <svg ref="svg" {...pick(this.props, SIZE)}></svg>
+      <div ref="root" className="nv-chart" style={style} >
+        <svg ref="svg" {...size}></svg>
       </div>
     );
   }

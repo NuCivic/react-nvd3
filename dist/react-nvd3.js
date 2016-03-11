@@ -64,6 +64,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _extends3 = _interopRequireDefault(_extends2);
 
+	var _assign = __webpack_require__(2);
+
+	var _assign2 = _interopRequireDefault(_assign);
+
 	var _getPrototypeOf = __webpack_require__(17);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -111,7 +115,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var RENDER_END = 'renderEnd';
 	var READY = 'ready';
 
-	var NVD3Chart = function (_React$Component) {
+	var NVD3Chart = (function (_React$Component) {
 	  (0, _inherits3.default)(NVD3Chart, _React$Component);
 
 	  function NVD3Chart() {
@@ -121,7 +125,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  (0, _createClass3.default)(NVD3Chart, [{
 	    key: 'componentDidMount',
-
 
 	    /**
 	     * Instantiate a new chart setting
@@ -173,7 +176,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.chart.x && this.chart.x((0, _utils.getValueFunction)(this.parsedProps.x, 'x'));
 	      this.chart.y && this.chart.y((0, _utils.getValueFunction)(this.parsedProps.y, 'y'));
-	      this.chart.margin(this.options(MARGIN, _utils.pick).margin || (0, _utils.propsByPrefix)('margin', this.props) || {});
+	      this.props.margin && this.chart.margin(this.options(MARGIN, _utils.pick).margin || (0, _utils.propsByPrefix)('margin', this.props) || {});
 
 	      // Configure componentes recursively
 	      this.configureComponents(this.chart, this.options(SETTINGS.concat(CONTAINER_STYLE), _utils.without));
@@ -264,18 +267,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var size = (0, _utils.pick)(this.props, SIZE);
+	      var style = (0, _assign2.default)({}, size, this.props.containerStyle);
 	      return _react2.default.createElement(
 	        'div',
-	        { ref: 'root', className: 'nv-chart', style: this.props.containerStyle },
-	        _react2.default.createElement('svg', (0, _extends3.default)({ ref: 'svg' }, (0, _utils.pick)(this.props, SIZE)))
+	        { ref: 'root', className: 'nv-chart', style: style },
+	        _react2.default.createElement('svg', (0, _extends3.default)({ ref: 'svg' }, size))
 	      );
 	    }
 	  }]);
 	  return NVD3Chart;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	// Babel 6 issue: http://stackoverflow.com/questions/33505992/babel-6-changes-how-it-exports-default
-
 
 	exports.default = NVD3Chart;
 	module.exports = NVD3Chart;
@@ -582,21 +586,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	exports.__esModule = true;
-
 	exports.default = function (instance, Constructor) {
 	  if (!(instance instanceof Constructor)) {
 	    throw new TypeError("Cannot call a class as a function");
 	  }
 	};
 
+	exports.__esModule = true;
+
 /***/ },
 /* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-
-	exports.__esModule = true;
 
 	var _defineProperty = __webpack_require__(23);
 
@@ -622,6 +624,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	})();
 
+	exports.__esModule = true;
+
 /***/ },
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
@@ -643,8 +647,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	exports.__esModule = true;
-
 	var _typeof2 = __webpack_require__(26);
 
 	var _typeof3 = _interopRequireDefault(_typeof2);
@@ -658,6 +660,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
 	};
+
+	exports.__esModule = true;
 
 /***/ },
 /* 26 */
@@ -1246,6 +1250,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.includes = includes;
+	exports.negate = negate;
+	exports.filterObject = filterObject;
+	exports.pick = pick;
+	exports.without = without;
+	exports.isPlainObject = isPlainObject;
+	exports.bindFunctions = bindFunctions;
+	exports.getValueFunction = getValueFunction;
+	exports.propsByPrefix = propsByPrefix;
+	exports.isCallable = isCallable;
 
 	var _getPrototypeOf = __webpack_require__(17);
 
@@ -1258,17 +1272,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _keys = __webpack_require__(59);
 
 	var _keys2 = _interopRequireDefault(_keys);
-
-	exports.includes = includes;
-	exports.negate = negate;
-	exports.filterObject = filterObject;
-	exports.pick = pick;
-	exports.without = without;
-	exports.isPlainObject = isPlainObject;
-	exports.bindFunctions = bindFunctions;
-	exports.getValueFunction = getValueFunction;
-	exports.propsByPrefix = propsByPrefix;
-	exports.isCallable = isCallable;
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
