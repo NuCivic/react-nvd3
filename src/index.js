@@ -84,8 +84,11 @@ export default class NVD3Chart extends React.Component {
 
       // Update the chart if the window size change.
       // Save resizeHandle to remove the resize listener later.
-      if(!this.resizeHandler)
-        this.resizeHandler = nv.utils.windowResize(this.chart.update);
+      if(!this.resizeHandler) {
+        this.resizeHandler = nv.utils.windowResize(() => {
+          this.chart.update();
+        });
+      }
 
       // PieCharts and lineCharts are an special case. Their dispacher is the pie component inside the chart.
       // There are some charts do not feature the renderEnd event
