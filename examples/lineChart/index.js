@@ -44,6 +44,7 @@
             yAxis: {
               tickFormat: function(d) {return parseFloat(d).toFixed(2); }
             },
+            xDomain: [-10, 120],
             type:'lineChart',
             datum: data,
             x: 'label',
