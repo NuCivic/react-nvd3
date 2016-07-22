@@ -115,7 +115,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var RENDER_END = 'renderEnd';
 	var READY = 'ready';
 
-	var NVD3Chart = (function (_React$Component) {
+	var NVD3Chart = function (_React$Component) {
 	  (0, _inherits3.default)(NVD3Chart, _React$Component);
 
 	  function NVD3Chart() {
@@ -125,6 +125,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  (0, _createClass3.default)(NVD3Chart, [{
 	    key: 'componentDidMount',
+
 
 	    /**
 	     * Instantiate a new chart setting
@@ -165,7 +166,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderChart',
 	    value: function renderChart() {
-	      var dispatcher = undefined;
+	      var _this3 = this;
+
+	      var dispatcher = void 0;
 
 	      // We try to reuse the current chart instance. If not possible then lets instantiate again
 	      this.chart = this.chart && !this.rendering ? this.chart : _nvd2.default.models[this.props.type]();
@@ -189,7 +192,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      // Update the chart if the window size change.
 	      // Save resizeHandle to remove the resize listener later.
-	      if (!this.resizeHandler) this.resizeHandler = _nvd2.default.utils.windowResize(this.chart.update);
+	      if (!this.resizeHandler) {
+	        this.resizeHandler = _nvd2.default.utils.windowResize(function () {
+	          _this3.chart.update();
+	        });
+	      }
 
 	      // PieCharts and lineCharts are an special case. Their dispacher is the pie component inside the chart.
 	      // There are some charts do not feature the renderEnd event
@@ -277,9 +284,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }]);
 	  return NVD3Chart;
-	})(_react2.default.Component);
+	}(_react2.default.Component);
 
 	// Babel 6 issue: http://stackoverflow.com/questions/33505992/babel-6-changes-how-it-exports-default
+
 
 	exports.default = NVD3Chart;
 	module.exports = NVD3Chart;
@@ -586,13 +594,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
+	exports.__esModule = true;
+
 	exports.default = function (instance, Constructor) {
 	  if (!(instance instanceof Constructor)) {
 	    throw new TypeError("Cannot call a class as a function");
 	  }
 	};
-
-	exports.__esModule = true;
 
 /***/ },
 /* 22 */
@@ -600,13 +608,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
+	exports.__esModule = true;
+
 	var _defineProperty = __webpack_require__(23);
 
 	var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = (function () {
+	exports.default = function () {
 	  function defineProperties(target, props) {
 	    for (var i = 0; i < props.length; i++) {
 	      var descriptor = props[i];
@@ -622,9 +632,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (staticProps) defineProperties(Constructor, staticProps);
 	    return Constructor;
 	  };
-	})();
-
-	exports.__esModule = true;
+	}();
 
 /***/ },
 /* 23 */
@@ -647,6 +655,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
+	exports.__esModule = true;
+
 	var _typeof2 = __webpack_require__(26);
 
 	var _typeof3 = _interopRequireDefault(_typeof2);
@@ -660,8 +670,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
 	};
-
-	exports.__esModule = true;
 
 /***/ },
 /* 26 */
@@ -1250,16 +1258,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.includes = includes;
-	exports.negate = negate;
-	exports.filterObject = filterObject;
-	exports.pick = pick;
-	exports.without = without;
-	exports.isPlainObject = isPlainObject;
-	exports.bindFunctions = bindFunctions;
-	exports.getValueFunction = getValueFunction;
-	exports.propsByPrefix = propsByPrefix;
-	exports.isCallable = isCallable;
 
 	var _getPrototypeOf = __webpack_require__(17);
 
@@ -1272,6 +1270,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _keys = __webpack_require__(59);
 
 	var _keys2 = _interopRequireDefault(_keys);
+
+	exports.includes = includes;
+	exports.negate = negate;
+	exports.filterObject = filterObject;
+	exports.pick = pick;
+	exports.without = without;
+	exports.isPlainObject = isPlainObject;
+	exports.bindFunctions = bindFunctions;
+	exports.getValueFunction = getValueFunction;
+	exports.propsByPrefix = propsByPrefix;
+	exports.isCallable = isCallable;
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
