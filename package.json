@@ -29,7 +29,8 @@
   },
   "main": "./dist/react-nvd3.min.js",
   "scripts": {
-    "start": "gulp serve"
+    "start": "gulp serve",
+    "build": "gulp js"
   },
   "devDependencies": {
     "babel-core": "^6.2.1",
