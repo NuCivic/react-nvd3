@@ -19,6 +19,7 @@ let TOOLTIP = 'tooltip';
 let CONTAINER_STYLE = 'containerStyle'
 
 const RENDER_START = 'renderStart';
+const ELEMENT_CLICK = 'elementClick';
 const RENDER_END = 'renderEnd';
 const READY = 'ready';
 
@@ -85,14 +86,17 @@ export default class NVD3Chart extends React.Component {
       // Update the chart if the window size change.
       // Save resizeHandle to remove the resize listener later.
       if(!this.resizeHandler) {
-        this.resizeHandler = nv.utils.windowResize(() => {
-          this.chart.update();
-        });
+          this.resizeHandler = nv.utils.windowResize(() => {
+              this.chart.update();
+          });
       }
 
       // PieCharts and lineCharts are an special case. Their dispacher is the pie component inside the chart.
       // There are some charts do not feature the renderEnd event
       switch(this.props.type) {
+        case 'multiBarChart':
+          dispatcher = this.chart.multibar.dispatch;
+          break
         case 'pieChart':
           dispatcher = this.chart.pie.dispatch;
           break
@@ -104,6 +108,7 @@ export default class NVD3Chart extends React.Component {
       }
 
       dispatcher.renderEnd && dispatcher.on('renderEnd', this.renderEnd.bind(this));
+      dispatcher.elementClick && dispatcher.on('elementClick', this.elementClick.bind(this));
       this.rendering = true;
 
       return this.chart;
@@ -118,6 +123,15 @@ export default class NVD3Chart extends React.Component {
       this.props.renderEnd(this.chart, RENDER_END);
     // Once renders end then we set rendering to false to allow to reuse the chart instance.
     this.rendering = false;
+  }
+
+  /**
+   * element click callback function
+   * @param  {Event} e
+   */
+  elementClick(e) {
+    if(isCallable(this.props.elementClick))
+      this.props.elementClick(e, elementClick);
   }
 
   /**
