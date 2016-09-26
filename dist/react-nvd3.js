@@ -112,6 +112,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var CONTAINER_STYLE = 'containerStyle';
 
 	var RENDER_START = 'renderStart';
+	var ELEMENT_CLICK = 'elementClick';
 	var RENDER_END = 'renderEnd';
 	var READY = 'ready';
 
@@ -120,7 +121,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  function NVD3Chart() {
 	    (0, _classCallCheck3.default)(this, NVD3Chart);
-	    return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(NVD3Chart).apply(this, arguments));
+	    return (0, _possibleConstructorReturn3.default)(this, (NVD3Chart.__proto__ || (0, _getPrototypeOf2.default)(NVD3Chart)).apply(this, arguments));
 	  }
 
 	  (0, _createClass3.default)(NVD3Chart, [{
@@ -201,6 +202,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // PieCharts and lineCharts are an special case. Their dispacher is the pie component inside the chart.
 	      // There are some charts do not feature the renderEnd event
 	      switch (this.props.type) {
+	        case 'multiBarChart':
+	          dispatcher = this.chart.multibar.dispatch;
+	          break;
 	        case 'pieChart':
 	          dispatcher = this.chart.pie.dispatch;
 	          break;
@@ -212,6 +216,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      dispatcher.renderEnd && dispatcher.on('renderEnd', this.renderEnd.bind(this));
+	      dispatcher.elementClick && dispatcher.on('elementClick', this.elementClick.bind(this));
 	      this.rendering = true;
 
 	      return this.chart;
@@ -229,6 +234,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // Once renders end then we set rendering to false to allow to reuse the chart instance.
 	      this.rendering = false;
 	    }
+
+	    /**
+	     * element click callback function
+	     * @param  {Event} e
+	     */
+
+	  }, {
+	    key: 'elementClick',
+	    value: function (_elementClick) {
+	      function elementClick(_x) {
+	        return _elementClick.apply(this, arguments);
+	      }
+
+	      elementClick.toString = function () {
+	        return _elementClick.toString();
+	      };
+
+	      return elementClick;
+	    }(function (e) {
+	      if ((0, _utils.isCallable)(this.props.elementClick)) this.props.elementClick(e, elementClick);
+	    })
 
 	    /**
 	     * Configure components recursively
