@@ -131,7 +131,7 @@ export default class NVD3Chart extends React.Component {
    */
   elementClick(e) {
     if(isCallable(this.props.elementClick))
-      this.props.elementClick(e, elementClick);
+      this.props.elementClick(e, 'elementClick');
   }
 
   /**
