@@ -242,19 +242,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  }, {
 	    key: 'elementClick',
-	    value: function (_elementClick) {
-	      function elementClick(_x) {
-	        return _elementClick.apply(this, arguments);
-	      }
-
-	      elementClick.toString = function () {
-	        return _elementClick.toString();
-	      };
-
-	      return elementClick;
-	    }(function (e) {
-	      if ((0, _utils.isCallable)(this.props.elementClick)) this.props.elementClick(e, elementClick);
-	    })
+	    value: function elementClick(e) {
+	      if ((0, _utils.isCallable)(this.props.elementClick)) this.props.elementClick(e, 'elementClick');
+	    }
 
 	    /**
 	     * Configure components recursively
