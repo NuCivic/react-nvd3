@@ -121,17 +121,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  function NVD3Chart() {
 	    (0, _classCallCheck3.default)(this, NVD3Chart);
-	    return (0, _possibleConstructorReturn3.default)(this, (NVD3Chart.__proto__ || (0, _getPrototypeOf2.default)(NVD3Chart)).apply(this, arguments));
+
+	    // bind "this" at constructor stage so that function is available to be removed from window resize event on unmount
+	    var _this = (0, _possibleConstructorReturn3.default)(this, (NVD3Chart.__proto__ || (0, _getPrototypeOf2.default)(NVD3Chart)).call(this));
+
+	    _this.resize = _this.resize.bind(_this);
+	    return _this;
 	  }
+
+	  /**
+	   * Instantiate a new chart setting
+	   * a callback if exists
+	   */
+
 
 	  (0, _createClass3.default)(NVD3Chart, [{
 	    key: 'componentDidMount',
-
-
-	    /**
-	     * Instantiate a new chart setting
-	     * a callback if exists
-	     */
 	    value: function componentDidMount() {
 	      var _this2 = this;
 
@@ -157,7 +162,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
-	      if (this.resizeHandler) this.resizeHandler.clear();
+	      if (this.resizeHandler) clearTimeout(this.resizeHandler);
+	      if (window.removeEventListener) window.removeEventListener("resize", this.resize);else window.detachEvent("resize", this.resize);
 	    }
 
 	    /**
@@ -167,8 +173,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderChart',
 	    value: function renderChart() {
-	      var _this3 = this;
-
 	      var dispatcher = void 0;
 
 	      // We try to reuse the current chart instance. If not possible then lets instantiate again
@@ -193,11 +197,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      // Update the chart if the window size change.
 	      // Save resizeHandle to remove the resize listener later.
-	      if (!this.resizeHandler) {
-	        this.resizeHandler = _nvd2.default.utils.windowResize(function () {
-	          _this3.chart.update();
-	        });
-	      }
+	      if (!this.resizeHandler) if (window.addEventListener) window.addEventListener("resize", this.resize, false);else window.attachEvent("resize", this.resize, false);
 
 	      // PieCharts and lineCharts are an special case. Their dispacher is the pie component inside the chart.
 	      // There are some charts do not feature the renderEnd event
@@ -280,6 +280,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var opt = this.parsedProps.options || this.parsedProps || this.props.chartOptions;
 	      predicate = predicate || _utils.pick;
 	      return predicate(opt, keys);
+	    }
+
+	    /**
+	     * element resize callback function
+	     * @param  {Event} e
+	     */
+
+	  }, {
+	    key: 'resize',
+	    value: function resize(e) {
+	      var _this3 = this;
+
+	      clearTimeout(this.resizeHandler);
+	      this.resizeHandler = setTimeout(function () {
+	        clearTimeout(_this3.resizeHandler);
+	        _this3.chart.update();
+	      }, 250);
 	    }
 
 	    /**
