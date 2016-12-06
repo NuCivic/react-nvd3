@@ -29,6 +29,13 @@ export default class NVD3Chart extends React.Component {
     configure: React.PropTypes.func
   };
 
+  constructor() {
+        super();
+
+        // bind "this" at constructor stage so that function is available to be removed from window resize event on unmount
+        this.resize = this.resize.bind(this);
+  }
+
   /**
    * Instantiate a new chart setting
    * a callback if exists
@@ -51,7 +58,11 @@ export default class NVD3Chart extends React.Component {
    */
   componentWillUnmount() {
     if(this.resizeHandler)
-      this.resizeHandler.clear();
+        clearTimeout(this.resizeHandler);
+        if (window.removeEventListener)
+                window.removeEventListener("resize", this.resize);
+        else
+                window.detachEvent("resize", this.resize);
   }
 
   /**
@@ -85,11 +96,11 @@ export default class NVD3Chart extends React.Component {
 
       // Update the chart if the window size change.
       // Save resizeHandle to remove the resize listener later.
-      if(!this.resizeHandler) {
-          this.resizeHandler = nv.utils.windowResize(() => {
-              this.chart.update();
-          });
-      }
+      if(!this.resizeHandler)
+                if (window.addEventListener)
+                        window.addEventListener("resize", this.resize, false);
+                else
+                        window.attachEvent("resize", this.resize, false);
 
       // PieCharts and lineCharts are an special case. Their dispacher is the pie component inside the chart.
       // There are some charts do not feature the renderEnd event
@@ -162,6 +173,18 @@ export default class NVD3Chart extends React.Component {
     let opt = this.parsedProps.options || this.parsedProps || this.props.chartOptions;
     predicate = predicate || pick;
     return predicate(opt, keys);
+  }
+
+  /**
+   * element resize callback function
+   * @param  {Event} e
+   */
+  resize(e) {
+        clearTimeout(this.resizeHandler);
+        this.resizeHandler = setTimeout(() => {
+                clearTimeout(this.resizeHandler);
+                this.chart.update();
+        }, 250);
   }
 
   /**
