@@ -295,7 +295,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      clearTimeout(this.resizeHandler);
 	      this.resizeHandler = setTimeout(function () {
 	        clearTimeout(_this3.resizeHandler);
-	        _this3.chart.update();
+	        if (_this3.chart && typeof _this3.chart.update === "function") _this3.chart.update();
 	      }, 250);
 	    }
 

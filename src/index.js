@@ -183,7 +183,7 @@ export default class NVD3Chart extends React.Component {
         clearTimeout(this.resizeHandler);
         this.resizeHandler = setTimeout(() => {
                 clearTimeout(this.resizeHandler);
-                this.chart.update();
+                if (this.chart && typeof this.chart.update === "function") this.chart.update();
         }, 250);
   }
 
