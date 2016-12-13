@@ -209,6 +209,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          dispatcher = this.chart.pie.dispatch;
 	          break;
 	        case 'lineChart':
+	        case 'linePlusBarChart':
 	          dispatcher = this.chart.lines.dispatch;
 	          break;
 	        default:
