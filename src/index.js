@@ -112,6 +112,7 @@ export default class NVD3Chart extends React.Component {
           dispatcher = this.chart.pie.dispatch;
           break
         case 'lineChart':
+        case 'linePlusBarChart':
           dispatcher = this.chart.lines.dispatch;
           break
         default:
