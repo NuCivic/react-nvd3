@@ -31,8 +31,8 @@ var PieWrapper = React.createClass({
         <button onClick={this.handleClick}>Change Data</button>
         <NVD3Chart
           id="chart"
-          width="600"
-          height="370"
+          width={600}
+          height={370}
           type="pieChart"
           datum={data}
           x="key"
