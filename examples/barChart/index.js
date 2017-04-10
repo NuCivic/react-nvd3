@@ -43,8 +43,8 @@
     getInitialState: function(){
       return {visible: true};
     },
-    changeVisibility: function(){
-      this.setState({visible: false});
+    toggleVisibility: function(){;
+      this.setState({visible: !this.state.visible});
     },
     render: function(){
       var chart;
@@ -60,7 +60,7 @@
 
       return (
         <div>
-          <button onClick={this.changeVisibility}>Click me</button>
+          <button onClick={this.toggleVisibility}>Toggle Visibility</button>
           {chart}
         </div>
       );
