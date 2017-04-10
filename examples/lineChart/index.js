@@ -23,14 +23,20 @@
     ];
   }
 
-  var LineWrapper = React.createClass({
-    getInitialState: function() {
-      return { count: 1}
-    },
-    handleClick: function() {
+  class LineWrapper extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        count: 1
+      };
+      this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
       this.setState({count: this.state.count + 1})
-    },
-    render: function() {
+    }
+
+    render() {
       const data = (this.state.count % 2 == 0)? getDatum(10): getDatum(11);
       return (
         <div>
@@ -61,7 +67,7 @@
         </div>
       )
     }
-  });
+  };
 
   ReactDOM.render(
     <LineWrapper name="wrapper"/>,

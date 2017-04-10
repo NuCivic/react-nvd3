@@ -39,14 +39,21 @@
   ];
 
   // Unmounting example
-  var Chart = React.createClass({
-    getInitialState: function(){
-      return {visible: true};
-    },
-    toggleVisibility: function(){;
-      this.setState({visible: !this.state.visible});
-    },
-    render: function(){
+  class Chart extends React.Component {
+
+    constructor(props) {
+      super(props);
+      this.state = {
+        visible: true
+      };
+      this.toggleVisibility = this.toggleVisibility.bind(this);
+    }
+
+    toggleVisibility() {
+      this.setState({ visible: !this.state.visible });
+    }
+
+    render() {
       var chart;
       var context = {
         getColor: function(i){
@@ -65,8 +72,12 @@
         </div>
       );
     }
-  })
+  }
 
+  ReactDOM.render(
+    <Chart />,
+    document.getElementById('barChart')
+  );
   ReactDOM.render(
     <Chart />,
     document.getElementById('barChart')
