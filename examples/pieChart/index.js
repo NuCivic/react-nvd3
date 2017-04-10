@@ -17,14 +17,20 @@ var data2 = [
 ];
 
 
-var PieWrapper = React.createClass({
-  getInitialState: function() {
-    return { count: 1}
-  },
-  handleClick: function() {
+class PieWrapper extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 1
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
     this.setState({count: this.state.count + 1})
-  },
-  render: function() {
+  }
+
+  render() {
     const data = (this.state.count % 2 == 0)? data1: data2;
     return (
       <div>
@@ -44,7 +50,7 @@ var PieWrapper = React.createClass({
       </div>
     )
   }
-})
+}
 
 ReactDOM.render(
   <PieWrapper name="wrapper" />,

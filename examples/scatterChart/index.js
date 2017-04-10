@@ -21,14 +21,18 @@
           return data;
       }
 
-  var Main = React.createClass({
-    getInitialState: function() {
-      return { data: randomData(4, 40) };
-    },
-    handleClick: function() {
+  class Main extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { data: randomData(4, 40) }
+      this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
       this.setState({ data: randomData(4, 40) });
-    },
-    render: function() {
+    }
+
+    render() {
       return (
         <div>
           <button onClick={this.handleClick}>
@@ -37,13 +41,12 @@
           <NVD3Chart
             type="scatterChart"
             datum={this.state.data}
-            containerStyle={{ width: "500px", height: "500px" }}
-            options={{ showDistX: true, showDistY: true }}
+            containerStyle={{ width: 500, height: 500 }}
           />
         </div>
       );
     }
-  });
+  };
 
   ReactDOM.render(
     <Main />,
