@@ -1,5 +1,5 @@
 ;(function(global){
-  var datum = [
+  var data = [
     {
       "key" : "Quantity" ,
       "bar": true,
@@ -17,7 +17,7 @@
   ReactDOM.render(
     React.createElement(NVD3Chart, {
       type:'linePlusBarChart',
-      datum: datum,
+      data: data,
       x: function(d,i) { return i },
       y: function(d,i) {return d[1] }
     }),

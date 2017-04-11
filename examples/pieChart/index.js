@@ -40,7 +40,7 @@ class PieWrapper extends React.Component {
           width={600}
           height={370}
           type="pieChart"
-          datum={data}
+          data={data}
           x="key"
           y="y"
           renderEnd={function(chart, e){console.log( chart.id(), e)}}

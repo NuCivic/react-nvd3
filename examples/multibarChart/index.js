@@ -1,5 +1,5 @@
 ;(function(global){
-  var datum = [{
+  var data = [{
       key: "Cumulative Return",
       values: [
         {
@@ -41,7 +41,7 @@
   ReactDOM.render(
     React.createElement(NVD3Chart, {
       type:'multiBarChart',
-      datum: datum,
+      data: data,
       x: 'label',
       y: 'value'
     }),

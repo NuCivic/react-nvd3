@@ -11,7 +11,7 @@ import {
   isCallable
 } from './utils.js';
 
-let SETTINGS = ['x', 'y', 'type', 'datum', 'configure'];
+let SETTINGS = ['x', 'y', 'type', 'data', 'configure'];
 let SIZE = ['width', 'height'];
 let MARGIN = 'margin';
 let LEGEND = 'legend';
@@ -77,7 +77,7 @@ export default class NVD3Chart extends React.Component {
       if(isCallable(this.props.renderStart))
         this.props.renderStart(this.chart, RENDER_START);
 
-      this.parsedProps = bindFunctions(this.props, this.props.context);
+      this.parsedProps = bindFunctions(this.props, this.props.handlers);
 
       this.chart.x && this.chart.x(getValueFunction(this.parsedProps.x, 'x'));
       this.chart.y && this.chart.y(getValueFunction(this.parsedProps.y, 'y'));
@@ -91,7 +91,7 @@ export default class NVD3Chart extends React.Component {
 
       // Render chart using d3
       this.selection = d3.select(this.refs.svg)
-        .datum(this.props.datum)
+        .datum(this.props.data)
         .call(this.chart);
 
       // Update the chart if the window size change.

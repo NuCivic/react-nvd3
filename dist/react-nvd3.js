@@ -104,7 +104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var SETTINGS = ['x', 'y', 'type', 'datum', 'configure'];
+	var SETTINGS = ['x', 'y', 'type', 'data', 'configure'];
 	var SIZE = ['width', 'height'];
 	var MARGIN = 'margin';
 	var LEGEND = 'legend';
@@ -180,7 +180,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if ((0, _utils.isCallable)(this.props.renderStart)) this.props.renderStart(this.chart, RENDER_START);
 
-	      this.parsedProps = (0, _utils.bindFunctions)(this.props, this.props.context);
+	      this.parsedProps = (0, _utils.bindFunctions)(this.props, this.props.handlers);
 
 	      this.chart.x && this.chart.x((0, _utils.getValueFunction)(this.parsedProps.x, 'x'));
 	      this.chart.y && this.chart.y((0, _utils.getValueFunction)(this.parsedProps.y, 'y'));
@@ -193,7 +193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      !this.props.configure || this.props.configure(this.chart);
 
 	      // Render chart using d3
-	      this.selection = _d2.default.select(this.refs.svg).datum(this.props.datum).call(this.chart);
+	      this.selection = _d2.default.select(this.refs.svg).datum(this.props.data).call(this.chart);
 
 	      // Update the chart if the window size change.
 	      // Save resizeHandle to remove the resize listener later.
@@ -1401,12 +1401,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * It replace all the {type:'function', name: 'nameOffunction'}
 	 * ocurrences in a give object by the functions stored
-	 * in the {context} with the name {name}
+	 * in the {handlers} with the name {name}
 	 * @param  {Object} o         The original object to be patched
-	 * @param  {Object} context  A dictionary with name:function
+	 * @param  {Object} handlers  A dictionary with name:function
 	 * @return {Object}           A patched version of the object
 	 */
-	function bindFunctions(o, context) {
+	function bindFunctions(o, handlers) {
 	  var out, v, key;
 	  out = Array.isArray(o) ? [] : {};
 	  for (key in o) {
@@ -1414,9 +1414,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (v == null) {
 	      continue;
 	    } else if ((typeof v === 'undefined' ? 'undefined' : (0, _typeof3.default)(v)) === 'object' && v !== null && v.type !== 'function') {
-	      out[key] = bindFunctions(v, context);
+	      out[key] = bindFunctions(v, handlers);
 	    } else if (v.type === 'function') {
-	      out[key] = context[v.name];
+	      out[key] = handlers[v.name];
 	    } else {
 	      out[key] = v;
 	    }

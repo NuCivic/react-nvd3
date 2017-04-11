@@ -1,6 +1,6 @@
 
 ;(function(global){
-  function getDatum(j) {
+  function getData(j) {
     var sin = [],
         cos = [];
 
@@ -37,7 +37,7 @@
     }
 
     render() {
-      const data = (this.state.count % 2 == 0)? getDatum(10): getDatum(11);
+      const data = (this.state.count % 2 == 0)? getData(10): getData(11);
       return (
         <div>
         <button onClick={this.handleClick}>Change Data</button>
@@ -52,7 +52,7 @@
             },
             xDomain: [-10, 120],
             type:'lineChart',
-            datum: data,
+            data: data,
             x: 'label',
             y: 'value',
             duration: 1,

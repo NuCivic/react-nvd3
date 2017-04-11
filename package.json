@@ -55,7 +55,9 @@
   },
   "dependencies": {
     "d3": "^3.5.16",
-    "nvd3": "^1.8.2"
+    "nvd3": "^1.8.2",
+    "react": "^15.5.3",
+    "react-dom": "^15.5.3"
   },
   "peerDependencies": {
     "react": ">=0.14.0",
