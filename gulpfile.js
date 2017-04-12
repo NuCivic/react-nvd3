@@ -4,6 +4,7 @@ var rename = require('gulp-rename');
 var webpack = require('gulp-webpack');
 var concat = require('gulp-concat');
 var browserSync = require('browser-sync').create();
+var jest = require('gulp-jest').default;
 
 gulp.task('js', function () {
   gulp.src('index.js')
@@ -14,6 +15,14 @@ gulp.task('js', function () {
   .pipe(rename({extname: '.min.js' }))
   .pipe(gulp.dest('dist'));
 });
+
+gulp.task('jest', function () {
+  return gulp.src('test').pipe(jest({}));
+});
+
+gulp.task('test', function(){
+  gulp.watch(['./src/*', './examples/**/*.js', './test/*.test.js'], ['jest']);
+})
 
 gulp.task('js-watch', ['js'], browserSync.reload);
 
