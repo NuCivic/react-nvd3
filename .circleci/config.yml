@@ -8,6 +8,7 @@ jobs:
       - checkout
       - run: mkdir -p ~/react-nvd3/artifacts
       - run: npm install
+      - run: npm install --global gulp-cli
       - run: gulp jest
       - store_artifacts:
           path: ~/react-nvd3/artifacts
