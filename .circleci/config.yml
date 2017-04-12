@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: node:7.4.0
+    working_directory: ~/react-nvd3
+    steps:
+      - checkout
+      - run: mkdir -p ~/react-nvd3/artifacts
+      - run: npm install
+      - run: gulp jest
+      - store_artifacts:
+          path: ~/react-nvd3/artifacts

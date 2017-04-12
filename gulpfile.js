@@ -4,6 +4,7 @@ var rename = require('gulp-rename');
 var webpack = require('gulp-webpack');
 var concat = require('gulp-concat');
 var browserSync = require('browser-sync').create();
+var jest = require('gulp-jest').default;
 
 gulp.task('js', function () {
   gulp.src('index.js')
@@ -15,6 +16,14 @@ gulp.task('js', function () {
   .pipe(gulp.dest('dist'));
 });
 
+gulp.task('jest', function () {
+  return gulp.src('test').pipe(jest({}));
+});
+
+gulp.task('test', function(){
+  gulp.watch(['./src/*', './examples/**/*.js', './test/*.test.js'], ['jest']);
+})
+
 gulp.task('js-watch', ['js'], browserSync.reload);
 
 // use default task to launch Browsersync and watch JS files
@@ -25,7 +34,7 @@ gulp.task('serve', ['js'], function () {
     },
     open: false
   });
-  gulp.watch(['./src/*', './examples/**/*.js'], ['js-watch']);
+  gulp.watch(['./src/*', './examples/**/*.js', ['js-watch']);
 });
 
 gulp.task('default', ['js']);
