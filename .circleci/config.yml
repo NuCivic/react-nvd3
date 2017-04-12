@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:7.4.0
+      - image: node:7.7.3
     working_directory: ~/react-nvd3
     steps:
       - checkout
