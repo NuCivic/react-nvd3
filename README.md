@@ -1,3 +1,5 @@
+[![react-nvd3 Build Status](https://circleci.com/gh/NuCivic/react-nvd3.svg?style=svg)](https://circleci.com/gh/NuCivic/react-nvd3)
+
 React component for NVD3 re-usable charting library
 
 ## Requirements

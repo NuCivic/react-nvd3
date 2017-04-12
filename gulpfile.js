@@ -34,7 +34,7 @@ gulp.task('serve', ['js'], function () {
     },
     open: false
   });
-  gulp.watch(['./src/*', './examples/**/*.js', ['js-watch']);
+  gulp.watch(['./src/*', './examples/**/*.js'], ['js-watch']);
 });
 
 gulp.task('default', ['js']);
