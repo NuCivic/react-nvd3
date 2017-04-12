@@ -77,7 +77,12 @@ export default class NVD3Chart extends React.Component {
       if(isCallable(this.props.renderStart))
         this.props.renderStart(this.chart, RENDER_START);
 
-      this.parsedProps = bindFunctions(this.props, this.props.handlers);
+      var handlers = this.props.handlers || (function(chart){
+        console.warn("Use of property 'context' is deprectated; replace with 'handlers'.");
+        return chart.props.datum;
+      })(this);
+
+      this.parsedProps = bindFunctions(this.props, handlers);
 
       this.chart.x && this.chart.x(getValueFunction(this.parsedProps.x, 'x'));
       this.chart.y && this.chart.y(getValueFunction(this.parsedProps.y, 'y'));
@@ -90,8 +95,13 @@ export default class NVD3Chart extends React.Component {
       !this.props.configure || this.props.configure(this.chart);
 
       // Render chart using d3
+      var data = this.props.data || (function(chart){
+        console.warn("Use of property 'datum' is deprectated; replace with 'data'.");
+        return chart.props.datum;
+      })(this);
+
       this.selection = d3.select(this.refs.svg)
-        .datum(this.props.data)
+        .datum(data)
         .call(this.chart);
 
       // Update the chart if the window size change.
