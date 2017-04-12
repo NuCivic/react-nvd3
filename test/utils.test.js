@@ -1,7 +1,6 @@
 import {
   includes,
-  negate,
-
+  negate
 } from '../src/utils.js';
 
 describe("The utils.includes function", () => {
