@@ -5,6 +5,8 @@ import {
   without,
   isPlainObject,
   bindFunctions,
+  getValueFunction,
+  propsByPrefix,
 } from '../src/utils.js';
 
 describe("Function utils.includes(array, item)", () => {
@@ -121,3 +123,25 @@ describe("Function utils.bindFunctions(obj, handlers)", () =>  {
   });
 });
 
+describe("Function utils.getValueFunction(v, _default)", () =>  {
+  it("It should ignore arguments that are functions", () => {
+    let f = (a) => {return a * a;}
+    let g = getValueFunction(f)
+    expect(g(2)).toBe(4);
+  });
+
+  it("It should return getter function for non function arguments", () => {
+    let a = "name"
+    let f = getValueFunction(a)
+    let testObject = {name: "react-nvd3"}
+    expect(f(testObject)).toBe("react-nvd3");
+  });
+
+  it("It should try the _default as a backup getter if first does not work", () => {
+    let a = "_x"
+    let b = "name"
+    let f = getValueFunction(a, b)
+    let testObject = {name: "react-nvd3"}
+    expect(f(testObject)).toBe("react-nvd3");
+  });
+});
