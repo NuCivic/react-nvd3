@@ -6,8 +6,5 @@ jobs:
     working_directory: ~/react-nvd3
     steps:
       - checkout
-      - run: mkdir -p ~/react-nvd3/artifacts
       - run: npm install
       - run: ./node_modules/gulp/bin/gulp.js jest
-      - store_artifacts:
-          path: ~/react-nvd3/artifacts
