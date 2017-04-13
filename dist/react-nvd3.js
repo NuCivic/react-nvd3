@@ -1307,7 +1307,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.includes = includes;
 	exports.negate = negate;
-	exports.filterObject = filterObject;
 	exports.pick = pick;
 	exports.without = without;
 	exports.isPlainObject = isPlainObject;
@@ -1399,7 +1398,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	/**
-	 * It replace all the {type:'function', name: 'nameOffunction'}
+	 * It replaces all the {type:'function', name: 'nameOffunction'}
 	 * ocurrences in a give object by the functions stored
 	 * in the {context} with the name {name}
 	 * @param  {Object} o         The original object to be patched
@@ -1454,7 +1453,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function isCallable(value) {
-	  return value && typeof value === 'function';
+	  return Boolean(value && typeof value === 'function');
 	}
 
 /***/ },
