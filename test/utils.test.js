@@ -6,7 +6,7 @@ import {
   isPlainObject,
   bindFunctions,
   getValueFunction,
-  propsByPrefix,
+  isCallable,
 } from '../src/utils.js';
 
 describe("Function utils.includes(array, item)", () => {
@@ -143,5 +143,19 @@ describe("Function utils.getValueFunction(v, _default)", () =>  {
     let f = getValueFunction(a, b)
     let testObject = {name: "react-nvd3"}
     expect(f(testObject)).toBe("react-nvd3");
+  });
+});
+
+describe("Function utils.isCallable(value)", () => {
+  it("should determine functions are callable", () => {
+    let f = () => {return 1};
+    expect(isCallable(f)).toBe(true);
+  });
+
+  it("should determine non functions are not callable", () => {
+    expect(isCallable(undefined)).toBe(false);
+    expect(isCallable(1)).toBe(false);
+    expect(isCallable({})).toBe(false);
+    expect(isCallable("")).toBe(false);
   });
 });

@@ -132,5 +132,5 @@ export function propsByPrefix(prefix, props) {
 }
 
 export function isCallable(value) {
-  return value && typeof value === 'function';
+  return Boolean(value && typeof value === 'function');
 }
