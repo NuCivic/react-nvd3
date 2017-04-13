@@ -89,3 +89,35 @@ describe("Function utils.isPlainObject(obj)", () =>  {
     expect(isPlainObject(myString)).toBe(false);
   });
 });
+
+describe("Function utils.bindFunctions(obj, handlers)", () =>  {
+  it("It should handle empty object and empty handlers", () => {
+    expect(bindFunctions({}, {})).toEqual({});
+  });
+
+  it("It should handle empty object with any handler", () => {
+    expect(bindFunctions({}, {a: () => {}})).toEqual({});
+  });
+
+  it("It should bind functions to their references", () => {
+    let data = {a: {name: "a", type: "function"}};
+    let handlers = {a: () => {return true}};
+
+    expect(bindFunctions(data, handlers).a()).toBe(true);
+  });
+
+  it("It should bind functions to a list of references", () => {
+    let data = [{a: {name: "a", type: "function"}}];
+    let handlers = {a: () => {return true}};
+
+    expect(bindFunctions(data, handlers)[0].a()).toBe(true);
+  });
+
+  it("It should bind functions to internal references", () => {
+    let data = [{a: {a: {name: "a", type: "function"}}}];
+    let handlers = {a: () => {return true}};
+
+    expect(bindFunctions(data, handlers)[0].a.a()).toBe(true);
+  });
+});
+
