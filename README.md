@@ -19,11 +19,11 @@ React component for NVD3 re-usable charting library
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.2/nv.d3.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-with-addons.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.min.js"></script>  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.min.js"></script>
   <!-- You should remove this for production and provide a compiled version of react components -->
   <script src="react-nvd3/dist/react-nvd3.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
-  
+
   <!-- STYLESHEETS -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css">
 
@@ -37,7 +37,7 @@ React component for NVD3 re-usable charting library
   <div id="barChart"></div>
   <script type="text/babel">
     ;(function(global){
-      var datum = [{
+      var data = [{
           key: "Cumulative Return",
           values: [
             {
@@ -76,7 +76,7 @@ React component for NVD3 re-usable charting library
         }
       ];
       ReactDOM.render(
-        <NVD3Chart id="barChart" type="discreteBarChart" datum={datum} x="label" y="value"/>,
+        <NVD3Chart id="barChart" type="discreteBarChart" data={data} x="label" y="value"/>,
         document.getElementById('barChart')
       );
     })(window);
@@ -94,7 +94,7 @@ React component for NVD3 re-usable charting library
 ## How to use
 
 ```javascript
-<NVD3Chart id="barChart" type="discreteBarChart" datum={datum} x="label" y="value"/>
+<NVD3Chart id="barChart" type="discreteBarChart" data={data} x="label" y="value"/>
 ```
 
 #### Type (string):
@@ -113,37 +113,37 @@ Chart type you want to use. Posible values are:
 * bulletChart
 * indentedTree
 
-#### Datum (array|function):
-A collection of data or a function that returns it.
+#### Data (array|function):
+A collection of datum or a function that returns it.
 
 #### x (string|function)
 The key in the collection that should be used as x value or a function that returns it:
 
-```javascript 
+```javascript
   function getX(d){
     return d.label;
   }
   React.render(
-    <NVD3Chart id="barChart" type="discreteBarChart" datum={datum} x={getX} y="value"/>,
+    <NVD3Chart id="barChart" type="discreteBarChart" data={data} x={getX} y="value"/>,
     document.getElementById('barChart')
-  );  
+  );
 ```
 
 #### y (string|function)
 The key in the collection that should be used as y value or a function that returns it.
 
 #### margin (object)
-To set chart margins you should provide an object with the wanted margins. For example 
+To set chart margins you should provide an object with the wanted margins. For example
 
-```javascript 
+```javascript
   React.render(
-    <NVD3Chart id="barChart" type="discreteBarChart" datum={datum} margin={{left:200}}/>,
+    <NVD3Chart id="barChart" type="discreteBarChart" data={data} margin={{left:200}}/>,
     document.getElementById('barChart')
-  );  
+  );
 ```
 
 
-### Events 
+### Events
 
 #### ready (function)
 A function to be called right after the first transition ends. This event is triggered only once.
@@ -154,16 +154,16 @@ A function to be called each time the chart rendering starts.
 #### renderEnd (function)
 A function to be called each time the chart transition ends.
 
-```javascript 
+```javascript
   React.render(
-    <NVD3Chart 
-      type="discreteBarChart" 
-      datum={datum} 
+    <NVD3Chart
+      type="discreteBarChart"
+      data={data}
       renderEnd={mycallbackEnd}
       renderStart={mycallbackStart}
       ready={mycallbackReady} />,
     document.getElementById('barChart')
-  );  
+  );
 ```
 
 #### Available chart configurations
@@ -171,14 +171,14 @@ All the nvd3 configurations for each chart are available. For example if you are
 
 ```javascript
   React.render(
-    <NVD3Chart id="barChart" type="discreteBarChart" showValues="true" datum={datum} x="x" y="value"/>,
+    <NVD3Chart id="barChart" type="discreteBarChart" showValues="true" data={data} x="x" y="value"/>,
     document.getElementById('barChart')
-  );  
+  );
 ```
 
 For more information about the available options you could check the nvd3 documentation http://nvd3.org/
 
-**NOTICE:** An extensive documentation with examples is embeded in the repository https://github.com/novus/nvd3/blob/master/examples/documentation.html . If you want to check it just clone it and open that file.
+**NOTICE:** An extensive documentation with examples is embedded in the repository https://github.com/novus/nvd3/blob/master/examples/documentation.html . If you want to check it just clone it and open that file.
 
 #### Configure nested nvd3 components
 If you need to configure nested nvd3 components you need to pass a nested object with the configurations to the property that match with the nested component.
@@ -187,7 +187,7 @@ Suppose you need to disable tooltips in your charts:
 
 ```javascript
   React.render(
-    <NVD3Chart tooltip={{enabled: true}} id="barChart" type="discreteBarChart" showValues="true" datum={datum} x="x" y="value"/>,
+    <NVD3Chart tooltip={{enabled: true}} id="barChart" type="discreteBarChart" showValues="true" data={data} x="x" y="value"/>,
     document.getElementById('barChart')
   );
 ```
@@ -198,11 +198,11 @@ In this case we are passing the nested object to configure the tooltip. This is 
 Since react allow you to use a plain javascript syntax to pass props then you could do this:
 
 ```javascript
-var chart = { 
-    id:'barChart', 
-    type:'discreteBarChart', 
-    datum: datum, 
-    x: 'label', 
+var chart = {
+    id:'barChart',
+    type:'discreteBarChart',
+    data: data,
+    x: 'label',
     y: 'value'
 };
 
@@ -225,26 +225,26 @@ $.getJSON('/mychartendpoint/1',function(chart){
 ```
 
 #### Ok, but what about axis formatters and other functions?
-Formatters are functions and we don't want to stored them in a database. If you want to persist your chart state somewhere you need to have a plain json object. 
+Formatters are functions and we don't want to store them in a database. If you want to persist your chart state somewhere you need to have a plain json object.
 
-Instead of persist your function implementations in your json you need to create a reference from the json object and pass those functions by context at the moment you instantiate the chart. 
+Instead of persisting your function implementations in your json you need to create a reference from the json object and pass those functions by context at the moment you instantiate the chart.
 
-Suppose you have a function called getColor to assign the colors in your charts. In this case you'll need to create a context object with the getColor function implementation inside and pass the reference to the color property.
+Suppose you have a function called getColor to assign the colors in your charts. In this case you'll need to create a handlers object with the getColor function implementation inside and pass the reference to the color property.
 
 Function references have this format: ```{name:'functionNameInContext', type:'function'}```.
 
 Let's see an example:
 
 ```javascript
-var context = {
+var handlers = {
   getColor: function(i){
     var colors = d3.scale.category20().range().slice(10);
-    return colors[Math.floor(Math.random() * colors.length)];    
+    return colors[Math.floor(Math.random() * colors.length)];
   }
 };
 
 ReactDOM.render(
-<NVD3Chart context={context} color={{name:'getColor', type:'function'}} type="discreteBarChart" datum={datum} x="label" y="value" />,
+<NVD3Chart handlers={handlers} color={{name:'getColor', type:'function'}} type="discreteBarChart" data={data} x="label" y="value" />,
 document.getElementById('barChart')
 );
 ```

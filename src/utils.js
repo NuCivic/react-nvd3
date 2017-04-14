@@ -81,12 +81,12 @@ export function isPlainObject(obj){
 /**
  * It replaces all the {type:'function', name: 'nameOffunction'}
  * ocurrences in a give object by the functions stored
- * in the {context} with the name {name}
+ * in the {handlers} with the name {name}
  * @param  {Object} o         The original object to be patched
- * @param  {Object} context  A dictionary with name:function
+ * @param  {Object} handlers  A dictionary with name:function
  * @return {Object}           A patched version of the object
  */
-export function bindFunctions(o, context) {
+export function bindFunctions(o, handlers) {
   var out, v, key;
   out = Array.isArray(o) ? [] : {};
   for (key in o) {
@@ -94,9 +94,9 @@ export function bindFunctions(o, context) {
     if(v == null) {
       continue;
     } else if(typeof v === 'object' && v !== null && v.type !== 'function') {
-      out[key] = bindFunctions(v, context);
+      out[key] = bindFunctions(v, handlers);
     } else if(v.type === 'function'){
-      out[key] = context[v.name];
+      out[key] = handlers[v.name];
     } else {
       out[key] = v;
     }

@@ -1,5 +1,5 @@
 ;(function(global){
-  var datum = [{
+  var data = [{
       key: "Cumulative Return",
       values: [
         {
@@ -55,14 +55,14 @@
 
     render() {
       var chart;
-      var context = {
+      var handlers = {
         getColor: function(i){
           var colors = d3.scale.category20().range().slice(10);
           return colors[Math.floor(Math.random() * colors.length)];
         }
       };
       if(this.state.visible) {
-        chart = <NVD3Chart context={context} color={{name:'getColor', type:'function'}} tooltip={{enabled: true}} type="discreteBarChart" datum={datum} x="label" y="value" />;
+        chart = <NVD3Chart handlers={handlers} color={{name:'getColor', type:'function'}} tooltip={{enabled: true}} type="discreteBarChart" data={data} x="label" y="value" />;
       }
 
       return (

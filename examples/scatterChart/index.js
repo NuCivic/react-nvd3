@@ -40,7 +40,7 @@
           </button>
           <NVD3Chart
             type="scatterChart"
-            datum={this.state.data}
+            data={this.state.data}
             containerStyle={{ width: 500, height: 500 }}
           />
         </div>

@@ -11,7 +11,7 @@
 
   function render(data) {
     ReactDOM.render(
-      <NVD3Chart type="stackedAreaChart" xAxis={{ tickFormat: (d) => d3.time.format('%x')(new Date(d)) }} datum={data} x={(d) => d[0]} y={(d) => d[1]} />,
+      <NVD3Chart type="stackedAreaChart" xAxis={{ tickFormat: (d) => d3.time.format('%x')(new Date(d)) }} data={data} x={(d) => d[0]} y={(d) => d[1]} />,
       document.getElementById('barChart')
     );    
   }
