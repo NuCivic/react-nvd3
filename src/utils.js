@@ -27,7 +27,7 @@ export function negate(f) {
  * @param  {Function} predicate
  * @return {Object}
  */
-export function filterObject(obj, keys, predicate) {
+function filterObject(obj, keys, predicate) {
   let result = {};
   let ks = Object.keys(obj);
 
@@ -79,7 +79,7 @@ export function isPlainObject(obj){
 }
 
 /**
- * It replace all the {type:'function', name: 'nameOffunction'}
+ * It replaces all the {type:'function', name: 'nameOffunction'}
  * ocurrences in a give object by the functions stored
  * in the {handlers} with the name {name}
  * @param  {Object} o         The original object to be patched
@@ -132,5 +132,5 @@ export function propsByPrefix(prefix, props) {
 }
 
 export function isCallable(value) {
-  return value && typeof value === 'function';
+  return Boolean(value && typeof value === 'function');
 }
