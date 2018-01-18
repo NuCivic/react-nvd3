@@ -98,7 +98,7 @@ React component for NVD3 re-usable charting library
 ```
 
 #### Type (string):
-Chart type you want to use. Posible values are:
+Chart type you want to use. Possible values are:
 
 * lineChart
 * scatterChart
@@ -133,7 +133,7 @@ The key in the collection that should be used as x value or a function that retu
 The key in the collection that should be used as y value or a function that returns it.
 
 #### margin (object)
-To set chart margins you should provide an object with the wanted margins. For example 
+To set chart margins you should provide an object with the wanted margins. For example:
 
 ```javascript 
   React.render(
@@ -167,7 +167,7 @@ A function to be called each time the chart transition ends.
 ```
 
 #### Available chart configurations
-All the nvd3 configurations for each chart are available. For example if you are using the discreteBarChart then you could show values in this way:
+All the nvd3 configurations for each chart are available. For example, if you are using the discreteBarChart then you could show values in this way:
 
 ```javascript
   React.render(
@@ -178,10 +178,10 @@ All the nvd3 configurations for each chart are available. For example if you are
 
 For more information about the available options you could check the nvd3 documentation http://nvd3.org/
 
-**NOTICE:** An extensive documentation with examples is embeded in the repository https://github.com/novus/nvd3/blob/master/examples/documentation.html . If you want to check it just clone it and open that file.
+**NOTICE:** An extensive documentation with examples is embeded in the repository https://github.com/novus/nvd3/blob/master/examples/documentation.html. If you want to check it just clone it and open that file.
 
 #### Configure nested nvd3 components
-If you need to configure nested nvd3 components you need to pass a nested object with the configurations to the property that match with the nested component.
+If you need to configure nested nvd3 components then pass a nested object with the configurations to the property that match with the nested component.
 
 Suppose you need to disable tooltips in your charts:
 
@@ -195,7 +195,7 @@ Suppose you need to disable tooltips in your charts:
 In this case we are passing the nested object to configure the tooltip. This is also applicable to axis components.
 
 ### Do you want to load a chart from your database?
-Since react allow you to use a plain javascript syntax to pass props then you could do this:
+Since React allows you to use a plain javascript syntax to pass props then you could do this:
 
 ```javascript
 var chart = { 
