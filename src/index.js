@@ -121,6 +121,8 @@ export default class NVD3Chart extends React.Component {
 
       dispatcher.renderEnd && dispatcher.on('renderEnd', this.renderEnd.bind(this));
       dispatcher.elementClick && dispatcher.on('elementClick', this.elementClick.bind(this));
+      this.chart.legend && this.chart.legend.dispatch && this.chart.legend.dispatch.on("legendClick", this.legendClick.bind(this));
+      this.chart.legend && this.chart.legend.dispatch && this.chart.legend.dispatch.on("legendDblclick", this.legendDblclick.bind(this));
       this.rendering = true;
 
       return this.chart;
@@ -144,6 +146,24 @@ export default class NVD3Chart extends React.Component {
   elementClick(e) {
     if(isCallable(this.props.elementClick))
       this.props.elementClick(e, 'elementClick');
+  }
+
+  /**
+   * legend click callback function
+   * @param  {Event} e
+   */
+  legendClick(e, a) {
+    if(isCallable(this.props.legend.legendClick))
+      this.props.legend.legendClick(this.chart, 'legendClick');
+  }
+
+  /**
+   * legend double click callback function
+   * @param  {Event} e
+   */
+  legendDblclick(series, index) {
+    if(isCallable(this.props.legend.legendDblclick))
+      this.props.legend.legendDblclick(this.chart, 'legendDblclick');
   }
 
   /**
