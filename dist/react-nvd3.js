@@ -218,8 +218,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      dispatcher.renderEnd && dispatcher.on('renderEnd', this.renderEnd.bind(this));
 	      dispatcher.elementClick && dispatcher.on('elementClick', this.elementClick.bind(this));
-	      this.chart.legend && this.chart.legend.dispatch && this.chart.legend.dispatch.on("legendClick", this.legendClick.bind(this));
-	      this.chart.legend && this.chart.legend.dispatch && this.chart.legend.dispatch.on("legendDblclick", this.legendDblclick.bind(this));
+	      if (this.props.legend && this.props.legend.legendClick) this.chart.legend && this.chart.legend.dispatch && this.chart.legend.dispatch.on("legendClick", this.legendClick.bind(this));
+	      if (this.props.legend && this.props.legend.legendDblclick) this.chart.legend && this.chart.legend.dispatch && this.chart.legend.dispatch.on("legendDblclick", this.legendDblclick.bind(this));
 	      this.rendering = true;
 
 	      return this.chart;
