@@ -24,16 +24,11 @@ const RENDER_END = 'renderEnd';
 const READY = 'ready';
 
 export default class NVD3Chart extends React.Component {
-  static propTypes: {
-    type: React.PropTypes.string.isRequired,
-    configure: React.PropTypes.func
-  };
-
   constructor() {
-        super();
-
-        // bind "this" at constructor stage so that function is available to be removed from window resize event on unmount
-        this.resize = this.resize.bind(this);
+    super();
+    this.svgRef = React.createRef();
+    // bind "this" at constructor stage so that function is available to be removed from window resize event on unmount
+    this.resize = this.resize.bind(this);
   }
 
   /**
@@ -90,7 +85,7 @@ export default class NVD3Chart extends React.Component {
       !this.props.configure || this.props.configure(this.chart);
 
       // Render chart using d3
-      this.selection = d3.select(this.refs.svg)
+      this.selection = d3.select(this.svgRef.current)
         .datum(this.props.datum)
         .call(this.chart);
 
@@ -218,8 +213,8 @@ export default class NVD3Chart extends React.Component {
     let size = pick(this.props, SIZE);
     let style = Object.assign({}, size, this.props.containerStyle);
     return (
-      <div ref="root" className="nv-chart" style={style} >
-        <svg ref="svg" {...size}></svg>
+      <div className="nv-chart" style={style} >
+        <svg ref={this.svgRef} {...size}></svg>
       </div>
     );
   }
