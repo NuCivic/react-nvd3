@@ -122,9 +122,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function NVD3Chart() {
 	    (0, _classCallCheck3.default)(this, NVD3Chart);
 
-	    // bind "this" at constructor stage so that function is available to be removed from window resize event on unmount
 	    var _this = (0, _possibleConstructorReturn3.default)(this, (NVD3Chart.__proto__ || (0, _getPrototypeOf2.default)(NVD3Chart)).call(this));
 
+	    _this.svgRef = _react2.default.createRef();
+	    // bind "this" at constructor stage so that function is available to be removed from window resize event on unmount
 	    _this.resize = _this.resize.bind(_this);
 	    return _this;
 	  }
@@ -193,7 +194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      !this.props.configure || this.props.configure(this.chart);
 
 	      // Render chart using d3
-	      this.selection = _d2.default.select(this.refs.svg).datum(this.props.datum).call(this.chart);
+	      this.selection = _d2.default.select(this.svgRef.current).datum(this.props.datum).call(this.chart);
 
 	      // Update the chart if the window size change.
 	      // Save resizeHandle to remove the resize listener later.
@@ -336,8 +337,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var style = (0, _assign2.default)({}, size, this.props.containerStyle);
 	      return _react2.default.createElement(
 	        'div',
-	        { ref: 'root', className: 'nv-chart', style: style },
-	        _react2.default.createElement('svg', (0, _extends3.default)({ ref: 'svg' }, size))
+	        { className: 'nv-chart', style: style },
+	        _react2.default.createElement('svg', (0, _extends3.default)({ ref: this.svgRef }, size))
 	      );
 	    }
 	  }]);
